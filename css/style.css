@@ -1,0 +1,98 @@
+
+*{
+    box-sizing: border-box;
+}
+
+
+/* =========================================== tela 3.1 ================================*/
+.tela_3_1{
+display: flex;
+flex-direction: column;
+align-items: center;
+
+margin: 0 auto;
+
+font-family: 'Roboto';
+
+padding:20px;
+}
+
+.tela_3_1 h1{
+
+    font-style: normal;
+    font-weight: 700;
+    font-size:20px;
+    color: #000000;
+
+    margin-bottom: 30px;
+
+    
+}
+
+.info-basica-quiz{
+
+    width: 600px;
+    height: 270px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    
+}
+
+.info-basica-quiz input{
+
+    width: 565px;
+    height: 50px;
+
+    font-style: italic;
+    font-weight: 400;
+    font-size: 19px;
+
+    color: #BABABA;
+    background: #FFFFFF;
+
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+
+    margin-bottom: 10px;
+
+    
+}
+
+.tela_3_1 button{
+
+    width: 370px;
+    height: 55px;
+
+    margin-top: 85px;
+
+
+    border: none;
+    background-color: #EC362D;
+    border-radius: 15px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+
+    color: #FFF5F4;
+
+
+}
+
+.tela_3_1 p{
+    color:red;
+}
+
+.escondido{
+    display: none;
+}
+/* =========================================== fim estilo tela 3.1 ================================*/
+
+@media(max-width:1100px){
+    .info-basica-quiz,
+    .info-basica-quiz input,
+    .tela_3_1 button{
+        width:100%;
+    }
+
+}
