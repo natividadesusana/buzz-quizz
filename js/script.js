@@ -430,9 +430,133 @@ function niveisQuiz(){
 
 }
 
+// -----------------------------------------------código santiago---------------------------------------
+function editarPergunta(elemento) {
+    const editando = elemento.nextElementSibling;
 
+    if (editando.classList.contains("escondido") === true) {
+        editando.classList.remove("escondido");
+    } else {
+        editando.classList.add("escondido");
+    }
+}
 
+function renderizarPerguntas() {
+    const listaPerguntas = document.querySelector(".criar-perguntas");
 
+    for (let i = 1; i <= quantidadePerguntas; i++) {
+        template = `<li class="pergunta">
+        <div onclick="editarPergunta(this)" class="pergunta-reduzida">
+            <h1> Pergunta ${i} </h1>
+            <ion-icon name="create-outline"></ion-icon>
+        </div>
+        <div class="pergunta-editando escondido">
+            <div class="input-duplo">
+                <input class="titulo-pergunta" placeholder="Texto da pergunta" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="cor-de-fundo" placeholder="Cor de fundo da pergunta em hexadecimal (#??????)" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+            <h1> Resposta Correta </h1>
+            <div class="input-duplo">
+                <input class="resposta-correta" placeholder="Resposta correta" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="url-correta" placeholder="URL da Imagem" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+            <h1> Respostas Incorretas </h1>
+            <div class="input-duplo incorreta-um">
+                <input class="resposta-incorreta-um" placeholder="Resposta incorreta 1" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="url-incorreta-um" placeholder="URL da imagem 1" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+            <div class="input-duplo incorreta-dois">
+                <input class="resposta-incorreta-dois" placeholder="Resposta incorreta 2" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="url-incorreta-dois" placeholder="URL da imagem 2" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+            <div class="input-duplo incorreta-tres">
+                <input class="resposta-incorreta-tres" placeholder="Resposta incorreta 3" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="url-incorreta-tres" placeholder="URL da imagem 3" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+        </div>
+    </li>`;
+        listaPerguntas.innerHTML = listaPerguntas.innerHTML + template;
+    }
+}
 
+function verificaPerguntas() {
+    const pattern = /^https:\/\//i;
+
+    let textoPergunta = "";
+    textoPergunta = document.querySelectorAll(".titulo-pergunta");
+
+    for (let i = 0; i < textoPergunta.length; i++) {
+        if (textoPergunta[i].value.length < 20) {
+            const input = textoPergunta[i];
+            const paragrafo = input.nextElementSibling;
+            paragrafo.classList.remove("escondido");
+        }
+    }
+
+    let corDeFundo = "";
+    corDeFundo = document.querySelectorAll(".cor-de-fundo");
+
+    for (let i = 0; i < corDeFundo.length; i++) {
+        if (corDeFundo[i].value.length !== 7 || corDeFundo[i].value.indexOf('#') !== 0) {
+            const input = corDeFundo[i];
+            const paragrafo = input.nextElementSibling;
+            paragrafo.classList.remove("escondido");
+        }
+    }
+
+    let respostaCorreta = "";
+    respostaCorreta = document.querySelectorAll(".resposta-correta");
+
+    for (let i = 0; i < respostaCorreta.length; i++) {
+        if (respostaCorreta[i].value.length == 0) {
+            const input = respostaCorreta[i];
+            const paragrafo = input.nextElementSibling;
+            paragrafo.classList.remove("escondido");
+        }
+    }
+
+    let urlImagemCorreta = "";
+    urlImagemCorreta = document.querySelectorAll(".url-correta");
+
+    for (let i = 0; i < urlImagemCorreta.length; i++) {
+        if (!(pattern.test(urlImagemCorreta[i].value))) {
+            const input = urlImagemCorreta[i];
+            const paragrafo = input.nextElementSibling;
+            paragrafo.classList.remove("escondido");
+        }
+    }
+
+    let respostaIncorreta1 = "";
+    respostaIncorreta1 = document.querySelectorAll(".resposta-incorreta-um");
+
+    for (let i = 0; i < respostaIncorreta1.length; i++) {
+        if (respostaIncorreta1[i].value.length == 0) {
+            const input = respostaIncorreta1[i];
+            const paragrafo = input.nextElementSibling;
+            paragrafo.classList.remove("escondido");
+        }
+    }
+
+    let urlImagemIncorreta1 = "";
+    urlImagemIncorreta1 = document.querySelectorAll(".url-incorreta-um");
+
+    for (let i = 0; i < urlImagemIncorreta1.length; i++) {
+        if (!(pattern.test(urlImagemIncorreta1[i].value))) {
+            const input = urlImagemIncorreta1[i];
+            const paragrafo = input.nextElementSibling;
+            paragrafo.classList.remove("escondido");
+        }
+    }
+}
 
 // CÓDIGO TAIS ABAIXO --------------------------------------
