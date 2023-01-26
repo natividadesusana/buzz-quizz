@@ -1,5 +1,4 @@
 // CÓDIGO SUSANA ABAIXO --------------------------------------
-
 // API BuzzQuizz
 const urlAPI = 'https://mock-api.driven.com.br/api/v4/buzzquizz';
 
@@ -8,6 +7,23 @@ let allGetQuizzes = [];
 
 // lista sorteada
 let userListId = [0, 1, 2, 3];
+
+let tituloDoQuiz;
+
+let urlImagem;
+
+let quantidadePerguntas;
+
+let quantidadeNivel;
+
+let titulosDosNiveis = [];
+let porcentagemNiveis = [];
+let urlImagemNiveis = [];
+let descricaoNiveis = [];
+
+let zero = [];
+
+const pattern = /^https:\/\//i;
 
 
 // GET TODOS OS QUIZZES
@@ -31,7 +47,7 @@ function renderingQuizzes(response) {
 
     allQuizzes.innerHTML = '';
 
-    for(let i = 0; i < allGetQuizzes.length; i++) {
+    for (let i = 0; i < allGetQuizzes.length; i++) {
 
         let templates = `
             <div class="box-quiz" onclick="goQuizPage(${allGetQuizzes[i].id})">
@@ -51,12 +67,12 @@ function renderingQuizzes(response) {
 function getUserQuizzes() {
     let userQuizzes = localStorage.getItem('userQuizzes');
 
-    if(userQuizzes) {
+    if (userQuizzes) {
         let listId = JSON.parse(userQuizzes);
-        for(let id = 0; id < listId.length; id++) {
+        for (let id = 0; id < listId.length; id++) {
             let quiz = listId[id];
             userListId.push(quiz);
-        }   
+        }
     }
     // renderiza a lista de quizzes do usuário
     renderingUserQuizzes();
@@ -65,19 +81,19 @@ function getUserQuizzes() {
 // renderiza quizzes do usuário
 function renderingUserQuizzes() {
 
-    if(userListId.length > 0) {
+    if (userListId.length > 0) {
         const listUserQuizzes = document.querySelector('.quizzes');
 
         listUserQuizzes.innerHTML = '';
 
-        for(let i = 0; i < userListId.length; i++) {
+        for (let i = 0; i < userListId.length; i++) {
             let idQuizzes = userListId[i];
 
-            const promisseGET = axios.get(`${urlAPI}/quizzes/${idQuizzes}`); 
+            const promisseGET = axios.get(`${urlAPI}/quizzes/${idQuizzes}`);
             promisseGET.then((response) => {
                 let quizzez = response.data;
-                listUserQuizzes.innerHTML += 
-                allYourQuizzes(quizzez.title, quizzez.image, quizzez.id);
+                listUserQuizzes.innerHTML +=
+                    allYourQuizzes(quizzez.title, quizzez.image, quizzez.id);
             });
         }
     }
@@ -99,11 +115,11 @@ function checkExistsUserQuiz() {
     const nonetQuizzesCreated = document.querySelector('.quiz-not-created');
     const quizzesCreated = document.querySelector('.your-quizzes');
 
-    if(localStorage.length === 0) {
+    if (localStorage.length === 0) {
         nonetQuizzesCreated.classList.remove('hidden');
         quizzesCreated.classList.add('hidden');
     }
-    if(localStorage.length != 0) {
+    if (localStorage.length != 0) {
         renderingUserQuizzes()
         nonetQuizzesCreated.classList.add('hidden');
         quizzesCreated.classList.remove('hidden');
@@ -116,7 +132,7 @@ checkExistsUserQuiz();
 function saveLocalStorage(createdId) {
     let userQuizzes;
 
-    if(!localStorage.getItem('userQuizzes')) {
+    if (!localStorage.getItem('userQuizzes')) {
         userQuizzes = [];
     } else {
         userQuizzes = JSON.parse(localStorage.getItem('userQuizzes'));
@@ -159,137 +175,415 @@ renderingUserQuizzes();
 
 
 
+
+
 // CÓDIGO SUSANA ACIMA --------------------------------------
 
 
 
 // CÓDIGO TAIS ABAIXO --------------------------------------
 
+function erroValidacaoInfo(i) {
+
+    const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
+    paragrafo[i].classList.remove("escondido");
+}
+
+function erroValidacaoNivel(local) {
+
+    const paragrafo = local.nextElementSibling;
+    paragrafo.classList.remove("escondido");
+}
+
+function ativaValidacaoNivel(local) {
+    const paragrafo = local.nextElementSibling;
+    paragrafo.classList.add("escondido");
+}
+
+function ativaValidacaoInfo(i) {
+
+    const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
+    paragrafo[i].classList.add("escondido");
+}
+
+function verficaSeTudoFoiPreeenchido(classe) {
+
+    //const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
+    const paragrafo = document.querySelectorAll(`.${classe} p`);
+
+    console.log(paragrafo);
+    const condicao = [];
+    for (let i = 0; i < paragrafo.length; i++) {
+        if (!(paragrafo[i].classList.contains("escondido"))) {
+            condicao.push(paragrafo[i].classList.contains("escondido"))
+        }
+    }
+
+    if (condicao.length !== 0) {
+        return;
+    }
+
+    return true;
+
+}
+
+function mudaPagina(local, local2) {
+
+    const tela1 = document.querySelector(`.${local}`);
+    const tela2 = document.querySelector(`.${local2}`);
+
+    tela1.classList.add("escondido");
+    tela2.classList.remove("escondido");
+}
+
+function verificaInfoBasicaQuiz() {
+
+    let string = "";
+    string = document.querySelectorAll(".info-basica-quiz input");
+
+    for (let i = 0; i < string.length; i++) {
+
+        switch (i) {
+
+            case 0:
+                if (!(20 <= string[i].value.length && string[i].value.length <= 65)) {
+                    erroValidacaoInfo(i);
+                }
+                else {
+
+                    tituloDoQuiz = string[i].value;
+                    ativaValidacaoInfo(i);
+                }
+                break;
+
+            case 1:
+
+                if (!(pattern.test(string[i].value))) {
+                    erroValidacaoInfo(i);
+                } else {
+
+                    urlImagem = string[i].value;
+                    ativaValidacaoInfo(i);
+                }
+                break;
+
+            case 2:
+                if (string[i].value < '3') {
+                    erroValidacaoInfo(i);
+                } else {
+
+                    quantidadePerguntas = string[i].value;
+                    ativaValidacaoInfo(i);
+                }
+                break;
+
+            case 3:
+                if (string[i].value < '2') {
+                    erroValidacaoInfo(i);
+                } else {
+
+                    quantidadeNivel = string[i].value;
+                    ativaValidacaoInfo(i);
+                }
+                break;
+        }
+
+    }
+
+    if (verficaSeTudoFoiPreeenchido("info-basica-quiz")) {
+        mudaPagina("tela_3_1", "tela_3_2");
+        renderizarPerguntas();
+        niveisQuiz();
+    }
+}
+
+function verificaZero() {
+
+    let novo = [];
+
+    porcentagemNiveis.forEach((num) => {
+        if (!novo.includes(num)) {
+            novo.push(num);
+        }
+    });
+
+    for (let i = 0; i < zero.length; i++) {
+        if (!(porcentagemNiveis.includes("0")) || novo.length !== porcentagemNiveis.length) {
+            erroValidacaoNivel(zero[i]);
+        } else {
+            ativaValidacaoNivel(zero[i]);
+        }
+    }
+}
+
+function verificaNivelQuiz(input) {
+
+    for (let i = 0; i < input.length; i++) {
+
+        switch (i) {
+
+            case 0:
+                if ((input[i].value <= 10)) {
+                    erroValidacaoNivel(input[i]);
+                } else {
+                    ativaValidacaoNivel(input[i]);
+                }
+                break;
+
+            case 1:
+                zero.push(input[i]);
+                if ((input[i].value < 0 || input[i].value > 100 || input[i].value === "")) {
+                    erroValidacaoNivel(input[i]);
+                } else {
+                    ativaValidacaoNivel(input[i]);
+                }
+                break;
+
+            case 2:
+                if (!(pattern.test(input[i].value))) {
+                    erroValidacaoNivel(input[i]);
+                } else {
+                    ativaValidacaoNivel(input[i]);
+                }
+                break;
+
+            case 3:
+                if (input[i].value < 30) {
+                    erroValidacaoNivel(input[i]);
+                } else {
+                    ativaValidacaoNivel(input[i]);
+                }
+                break;
+
+        }
+    }
+
+}
+
+function pegaElementosNivelQuiz() {
+
+    titulosDosNiveis = [];
+    porcentagemNiveis = [];
+    urlImagemNiveis = [];
+    descricaoNiveis = [];
+
+    const div = document.querySelectorAll(".barra-animada");
+    let input = "";
+
+
+    for (let i = 0; i < div.length; i++) {
+
+        input = div[i].querySelectorAll("input, textarea");
+
+        for (let j = 0; j < input.length; j++) {
+
+            switch (j) {
+
+                case 0:
+                    titulosDosNiveis.push(input[j].value);
+                    break;
+
+                case 1:
+                    porcentagemNiveis.push(input[j].value);
+                    break;
+
+                case 2:
+                    urlImagemNiveis.push(input[j].value);
+                    break;
+
+                case 3:
+                    descricaoNiveis.push(input[j].value);
+                    break;
+            }
+        }
+
+        verificaNivelQuiz(input);
+    }
 
 
 
+    verificaZero();
 
+    if (verficaSeTudoFoiPreeenchido("niveis")) {
+        mudaPagina("tela_3_3");
+    }
 
-// let tituloDoQuiz;
-// let urlImagem;
-// let quantidadePerguntas;
-// let quantidadeNivel;
+}
 
-// function erroValidacao(i){
+function niveisQuiz() {
 
-//     const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
-//     paragrafo[i].classList.remove("escondido");
-// }
+    const div = document.querySelector(".niveis-quiz");
+    let html = "";
 
-// function ativaValidacao(i){
+    console.log(quantidadeNivel);
 
-//     const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
-//     paragrafo[i].classList.add("escondido");
-// }
+    for (let i = 1; i <= quantidadeNivel; i++) {
+        html += `<div class="niveis"> 
 
-// function verficaSeTudoFoiPreeenchido(){
+                    <div class="titulo">
+                        <h2> Nível ${i} </h2> <ion-icon name="create-outline"></ion-icon> 
+                    </div>
 
-//     const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
-//     const condicao = [];
-//     for(let i = 0; i<paragrafo.length; i++){
-//         if(!(paragrafo[i].classList.contains("escondido"))){
-//             condicao.push(paragrafo[i].classList.contains("escondido"))
-//         }
-//     }
+                    <div class="barra-animada">
+                        <input type="text" placeholder="Título do nível">
+                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <input type="text" placeholder="% de acerto mínima">
+                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <input type="text" placeholder="URL da imagem do nível">
+                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <textarea placeholder="Descrição do nível"></textarea>
+                        <p class="escondido"> Preencha os dados corretamente </p>
+                    </div>
+        </div>`
+    }
 
-//     if(condicao.length !== 0){
-//         return;
-//     }
+    div.innerHTML = html;
 
-//     return true;
-    
-// }
+}
 
-// function mudaPagina(){
+// -----------------------------------------------código santiago---------------------------------------
 
-//     const tela = document.querySelector(".tela_3_1");
-//     console.log(tela);
-//    // tela.classList.add("escondido");
-// }
+function editarPergunta(elemento) {
+    const editando = elemento.nextElementSibling;
 
+    if (editando.classList.contains("escondido") === true) {
+        editando.classList.remove("escondido");
+    } else {
+        editando.classList.add("escondido");
+    }
+}
 
-// function verificaInfoBasicaQuiz(){
+function renderizarPerguntas() {
+    const listaPerguntas = document.querySelector(".criar-perguntas");
 
-//     let string="";   
-//     string = document.querySelectorAll(".info-basica-quiz input");
+    for (let i = 1; i <= quantidadePerguntas; i++) {
+        template = `<li class="pergunta">
+        <div onclick="editarPergunta(this)" class="pergunta-reduzida">
+            <h1> Pergunta ${i} </h1>
+            <ion-icon name="create-outline"></ion-icon>
+        </div>
+        <div class="pergunta-editando escondido">
+            <div class="input-duplo">
+                <input class="titulo-pergunta" placeholder="Texto da pergunta" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="cor-de-fundo" placeholder="Cor de fundo da pergunta em hexadecimal (#??????)" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+            <h1> Resposta Correta </h1>
+            <div class="input-duplo">
+                <input class="resposta-correta" placeholder="Resposta correta" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="url-correta" placeholder="URL da Imagem" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+            <h1> Respostas Incorretas </h1>
+            <div class="input-duplo incorreta-um">
+                <input class="resposta-incorreta-um" placeholder="Resposta incorreta 1" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="url-incorreta-um" placeholder="URL da imagem 1" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+            <div class="input-duplo incorreta-dois">
+                <input class="resposta-incorreta-dois" placeholder="Resposta incorreta 2" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="url-incorreta-dois" placeholder="URL da imagem 2" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+            <div class="input-duplo incorreta-tres">
+                <input class="resposta-incorreta-tres" placeholder="Resposta incorreta 3" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+                <input class="url-incorreta-tres" placeholder="URL da imagem 3" />
+                <p class="escondido"> Preencha os dados corretamente </p>
+            </div>
+        </div>
+    </li>`;
+        listaPerguntas.innerHTML = listaPerguntas.innerHTML + template;
+    }
+}
 
-//     for(let i = 0; i < string.length;i++){
+function verificaPerguntas() {
+    const pattern = /^https:\/\//i;
 
-//         console.log(string[i].value);
-//         console.log(string[i].value.length);
-     
-//         switch (i){
+    let textoPergunta = "";
+    textoPergunta = document.querySelectorAll(".titulo-pergunta");
 
-//             case 0:
-//                 if(!(20 <= string[i].value.length && string[i].value.length <= 65)){
-//                     console.log(" caso 1: Preencha os dados corretamente");
-//                     erroValidacao(i);
-//                 }
-//                 else{
+    for (let i = 0; i < textoPergunta.length; i++) {
+        const input = textoPergunta[i];
+        const paragrafo = input.nextElementSibling;
+        if (textoPergunta[i].value.length < 20) {
+            paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
+        }
+    }
 
-//                     tituloDoQuiz = string[i].value;
-//                    ativaValidacao(i);
-//                 }
-//             break;
+    let corDeFundo = "";
+    corDeFundo = document.querySelectorAll(".cor-de-fundo");
 
-//             case 1:
+    for (let i = 0; i < corDeFundo.length; i++) {
+        const input = corDeFundo[i];
+        const paragrafo = input.nextElementSibling;
+        if (corDeFundo[i].value.length !== 7 || corDeFundo[i].value.indexOf('#') !== 0) {
+            paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
+        }
+    }
 
-//                 const pattern = /^https:\/\//i;
-//                 if(!(pattern.test(string[i].value))){
-//                     console.log("caso 2: Preencha os dados corretamente");
-//                     erroValidacao(i);
-//                 }else {
+    let respostaCorreta = "";
+    respostaCorreta = document.querySelectorAll(".resposta-correta");
 
-//                     urlImagem = string[i].value;
-//                     ativaValidacao(i);
-//                 }
-//             break;
+    for (let i = 0; i < respostaCorreta.length; i++) {
+        const input = respostaCorreta[i];
+        const paragrafo = input.nextElementSibling;
+        if (respostaCorreta[i].value.length === 0) {
+            paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
+        }
+    }
 
-//             case 2:
-//                 if(string[i].value < '3'){
-//                     console.log("caso 3: Preencha os dados corretamente");
-//                     erroValidacao(i);
+    let urlImagemCorreta = "";
+    urlImagemCorreta = document.querySelectorAll(".url-correta");
 
-                    
-//                 }else{
+    for (let i = 0; i < urlImagemCorreta.length; i++) {
+        const input = urlImagemCorreta[i];
+        const paragrafo = input.nextElementSibling;
+        if (!(pattern.test(urlImagemCorreta[i].value))) {
+            paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
+        }
+    }
 
-//                     quantidadePerguntas = string[i].value;
-//                     ativaValidacao(i);
-//                 }
-//             break;
+    let respostaIncorreta1 = "";
+    respostaIncorreta1 = document.querySelectorAll(".resposta-incorreta-um");
 
-//             case 3:
-//                 if(string[i].value < '2'){
-//                     console.log(" caso 4: Preencha os dados corretamente");
-//                     erroValidacao(i);
-//                 }else{
+    for (let i = 0; i < respostaIncorreta1.length; i++) {
+        const input = respostaIncorreta1[i];
+        const paragrafo = input.nextElementSibling;
+        if (respostaIncorreta1[i].value.length == 0) {
+            paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
+        }
+    }
 
-//                     quantidadeNivel = string[i].value;
-//                     ativaValidacao(i);
-//                 }
-//             break;
-//         }   
+    let urlImagemIncorreta1 = "";
+    urlImagemIncorreta1 = document.querySelectorAll(".url-incorreta-um");
 
-//     }
+    for (let i = 0; i < urlImagemIncorreta1.length; i++) {
+        const input = urlImagemIncorreta1[i];
+        const paragrafo = input.nextElementSibling;
+        if (!(pattern.test(urlImagemIncorreta1[i].value))) {
+            paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
+        }
+    }
 
-//     console.log(tituloDoQuiz + "\n" +
-//                     urlImagem + "\n" +
-//                     quantidadePerguntas + "\n" +
-//                     quantidadeNivel)
-
-//     if(verficaSeTudoFoiPreeenchido()){
-//         mudaPagina();
-//     }
-
-    
-// }
-
-
-
-
+    if (verficaSeTudoFoiPreeenchido("input-duplo")) {
+        mudaPagina("tela_3_2", "tela_3_3");
+    }
+}
 // CÓDIGO TAIS ABAIXO --------------------------------------
