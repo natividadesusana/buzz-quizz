@@ -81,7 +81,7 @@ function renderingUserQuizzes() {
 
 function allYourQuizzes(idQuizzes, imgUrl, title) {
     return `
-    <div class="box-quiz" onclick="goQuizPage() idQuizzes="${idQuizzes}">
+    <div class="box-quiz" onclick="goQuizPage()" idQuizzes="${idQuizzes}">
         <img imgUrl='${imgUrl}'/>
         <figcaption>${title}</figcaption>
         <div class="background"></div>
