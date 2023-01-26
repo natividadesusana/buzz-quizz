@@ -24,7 +24,8 @@
             <aside class="quiz-not-created">
                 <div class="create-quiz">
                     <p>Você não criou nenhum<br>quizz ainda :(</p>
-                    <button onclick="goQuizCreation()">Criar Quizz</button>
+                    <!-- <button onclick="goQuizCreation()">Criar Quizz</button> -->
+                    <button onclick="mudaPagina('main-container','tela_3_1')">Criar Quizz</button>
                 </div>
             </aside>
 
@@ -61,7 +62,7 @@
                         <figcaption>Acerte os personagens corretos dos Simpsons e prove seu amor!</figcaption>
                     </div>
                     <div class="box-quiz">
-                        <img src="./img/bicho-preguiça.png" />
+                        <img src="./img/bicho-preguiça.png" />
                         <figcaption>O quanto você é de boas?</figcaption>
                     </div>
                     <div class="box-quiz">
@@ -73,7 +74,7 @@
                         <figcaption>Acerte os personagens corretos dos Simpsons e prove seu amor!</figcaption>
                     </div>
                     <div class="box-quiz">
-                        <img src="./img/bicho-preguiça.png" />
+                        <img src="./img/bicho-preguiça.png" />
                         <figcaption>O quanto você é de boas?</figcaption>
                     </div>
                     <div class="box-quiz">
@@ -86,6 +87,36 @@
         </div>
     </div>
 
+    <aside class="tela_3_1 escondido"> 
+        <h1> Comece pelo começo </h1>
+
+        <div class="info-basica-quiz">
+            <input type="text" placeholder="Título do seu quizz">
+            <p class="escondido"> Preencha os dados corretamente </p>
+            <input type="text" placeholder="URL da imagem do seu quizz">
+            <p class="escondido"> Preencha os dados corretamente </p>
+            <input type="text" placeholder="Quantidade de perguntas do quizz">
+            <p class="escondido"> Preencha os dados corretamente </p>
+            <input type="text" placeholder="Quantidade de níveis do quizz">
+            <p class="escondido"> Preencha os dados corretamente </p>
+        </div>
+
+        <button onclick="verificaInfoBasicaQuiz()"> Prosseguir pra criar perguntas </button>
+    </aside>
+
+    <aside class="tela_3_3 escondido">
+        <h1> Agora, decida os níveis! </h1>
+        
+        <div class="niveis-quiz">
+
+        </div>
+
+        <button onclick="pegaElementosNivelQuiz()"> Finalizar quiz </button>
+    </aside>
+
+
+
+   <!-- <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script> -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./js/script.js"></script>
@@ -96,40 +127,5 @@
 
 
 
-<!-- CÓDIGO SUSANA ACIMA -------------------------------------- -->
 
 
-
-<!-- CÓDIGO TAIS ABAIXO -------------------------------------- -->
-
-
-
-
-
-<!-- </body>
-        <aside class="tela_3_1"> 
-
-            <h1> Comece pelo começo </h1>
-
-            <div class="info-basica-quiz">
-                <input type="text" placeholder="Título do seu quizz">
-                <p class="escondido"> Preencha os dados corretamente </p>
-                <input type="text" placeholder="URL da imagem do seu quizz">
-                <p class="escondido"> Preencha os dados corretamente </p>
-                <input type="text" placeholder="Quantidade de perguntas do quizz">
-                <p class="escondido"> Preencha os dados corretamente </p>
-                <input type="text" placeholder="Quantidade de níveis do quizz">
-                <p class="escondido"> Preencha os dados corretamente </p>
-            </div>
-
-            <button onclick="verificaInfoBasicaQuiz()"> Prosseguir pra criar perguntas </button>
-        </aside>
-
-        <script src="./js/script.js"></script>
-    </body> -->
-
-
-
-
-
-<!-- CÓDIGO TAIS ACIMA -------------------------------------- -->

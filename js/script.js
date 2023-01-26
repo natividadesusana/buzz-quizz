@@ -1,12 +1,28 @@
 // CÓDIGO SUSANA ABAIXO --------------------------------------
 
 
-
 const urlAPI = 'https://mock-api.driven.com.br/api/v4/buzzquizz';
 
 let allGetQuizzes = [];
 
 let userListId = [0, 1, 2, 3];
+
+let tituloDoQuiz; 
+
+let urlImagem;
+
+let quantidadePerguntas;
+
+let quantidadeNivel;  
+
+let titulosDosNiveis = [];
+let porcentagemNiveis = [];
+let urlImagemNiveis = [];
+let descricaoNiveis = [];
+
+let zero = [];
+
+const pattern = /^https:\/\//i;
 
 
 // GET TODOS OS QUIZZES
@@ -152,142 +168,269 @@ renderingQuizzes();
 getUserQuizzes();
 renderingUserQuizzes();
 
-
-
-
-
-
-
-
 // CÓDIGO SUSANA ACIMA --------------------------------------
 
 
 
 // CÓDIGO TAIS ABAIXO --------------------------------------
 
+function erroValidacaoInfo(i){
 
+    const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
+    paragrafo[i].classList.remove("escondido");
+}
 
+function erroValidacaoNivel(local){
 
+    const paragrafo = local.nextElementSibling;
+    paragrafo.classList.remove("escondido");
+}
 
+function ativaValidacaoNivel(local){
+    const paragrafo = local.nextElementSibling;
+    paragrafo.classList.add("escondido");
+}
 
-// let tituloDoQuiz;
-// let urlImagem;
-// let quantidadePerguntas;
-// let quantidadeNivel;
+function ativaValidacaoInfo(i){
 
-// function erroValidacao(i){
+    const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
+    paragrafo[i].classList.add("escondido");
+}
 
-//     const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
-//     paragrafo[i].classList.remove("escondido");
-// }
+function verficaSeTudoFoiPreeenchido(classe){
 
-// function ativaValidacao(i){
+    //const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
+    const paragrafo = document.querySelectorAll(`.${classe} p`);
 
-//     const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
-//     paragrafo[i].classList.add("escondido");
-// }
+    console.log(paragrafo);
+    const condicao = [];
+    for(let i = 0; i<paragrafo.length; i++){
+        if(!(paragrafo[i].classList.contains("escondido"))){
+            condicao.push(paragrafo[i].classList.contains("escondido"))
+        }
+    }
 
-// function verficaSeTudoFoiPreeenchido(){
+   if(condicao.length !== 0){
+             return;
+    }
 
-//     const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
-//     const condicao = [];
-//     for(let i = 0; i<paragrafo.length; i++){
-//         if(!(paragrafo[i].classList.contains("escondido"))){
-//             condicao.push(paragrafo[i].classList.contains("escondido"))
-//         }
-//     }
-
-//     if(condicao.length !== 0){
-//         return;
-//     }
-
-//     return true;
+     return true;
     
-// }
+}
 
-// function mudaPagina(){
+function mudaPagina(local, local2){ 
 
-//     const tela = document.querySelector(".tela_3_1");
-//     console.log(tela);
-//    // tela.classList.add("escondido");
-// }
+    const tela1 = document.querySelector(`.${local}`);
+    const tela2 = document.querySelector(`.${local2}`);
+
+    tela1.classList.add("escondido");
+    tela2.classList.remove("escondido");
+}
+
+ function verificaInfoBasicaQuiz(){
+
+    let string="";   
+    string = document.querySelectorAll(".info-basica-quiz input");
+
+    for(let i = 0; i < string.length;i++){
+
+        switch (i){
+
+            case 0:
+                if(!(20 <= string[i].value.length && string[i].value.length <= 65)){
+                    erroValidacaoInfo(i);
+                }
+                else{
+
+                    tituloDoQuiz = string[i].value;
+                    ativaValidacaoInfo(i);
+                 }
+             break;
+
+             case 1:
+
+                if(!(pattern.test(string[i].value))){
+                    erroValidacaoInfo(i);
+                }else {
+
+                     urlImagem = string[i].value;
+                     ativaValidacaoInfo(i);}             
+            break;
+
+            case 2:
+                if(string[i].value < '3'){
+                    erroValidacaoInfo(i);
+                 }else{
+
+                     quantidadePerguntas = string[i].value;
+                     ativaValidacaoInfo(i);
+                 }
+             break;
+
+            case 3:
+                if(string[i].value < '2'){
+                    erroValidacaoInfo(i);
+                }else{
+
+                     quantidadeNivel = string[i].value;
+                     ativaValidacaoInfo(i);
+                 }
+           break;
+       }   
+
+    }
+
+    if(verficaSeTudoFoiPreeenchido("info-basica-quiz")){
+        mudaPagina("tela_3_1","tela_3_3");
+        niveisQuiz();
+    }
+}
+
+function verificaZero(){
+
+    let novo = [];
+
+    porcentagemNiveis.forEach( (num) => {
+                                            if(!novo.includes(num)){
+                                                novo.push(num);
+                                            }
+    });
+
+    for(let i = 0; i<zero.length; i++){
+        if(!(porcentagemNiveis.includes("0")) || novo.length !== porcentagemNiveis.length){
+            erroValidacaoNivel(zero[i]);
+        }else{
+            ativaValidacaoNivel(zero[i]);
+        }
+    }
+}
+
+function verificaNivelQuiz(input){
+
+    for(let i = 0; i<input.length; i++){
+
+        switch (i){
+
+            case 0:
+                if((input[i].value <= 10)){
+                    erroValidacaoNivel(input[i]);
+                }else{
+                    ativaValidacaoNivel(input[i]);
+                }
+            break;
+
+            case 1:
+                zero.push(input[i]);
+                if((input[i].value < 0 || input[i].value > 100 || input[i].value === "")){
+                    erroValidacaoNivel(input[i]);
+                }else{
+                    ativaValidacaoNivel(input[i]);
+                }
+            break;
+
+            case 2:
+                if(!(pattern.test(input[i].value))){
+                    erroValidacaoNivel(input[i]);
+                }else{
+                    ativaValidacaoNivel(input[i]);
+                }
+            break;
+
+            case 3:
+                if(input[i].value < 30){
+                     erroValidacaoNivel(input[i]);
+                }else{
+                    ativaValidacaoNivel(input[i]);
+                }
+            break;
+
+        }    
+    }     
+    
+}
+ 
+function pegaElementosNivelQuiz(){
+
+    titulosDosNiveis = [];
+    porcentagemNiveis = [];
+    urlImagemNiveis = [];
+    descricaoNiveis =[];
+    
+   const div = document.querySelectorAll(".barra-animada");
+   let input="";
 
 
-// function verificaInfoBasicaQuiz(){
+    for(let i = 0 ; i < div.length ; i++){
 
-//     let string="";   
-//     string = document.querySelectorAll(".info-basica-quiz input");
+        input = div[i].querySelectorAll("input, textarea");
+        
+        for(let j = 0 ; j < input.length; j++){
+            
+            switch (j){
 
-//     for(let i = 0; i < string.length;i++){
+                case 0:
+                    titulosDosNiveis.push(input[j].value);
+                break;
 
-//         console.log(string[i].value);
-//         console.log(string[i].value.length);
-     
-//         switch (i){
+                case 1:
+                    porcentagemNiveis.push(input[j].value);
+                break;
 
-//             case 0:
-//                 if(!(20 <= string[i].value.length && string[i].value.length <= 65)){
-//                     console.log(" caso 1: Preencha os dados corretamente");
-//                     erroValidacao(i);
-//                 }
-//                 else{
+                case 2:
+                    urlImagemNiveis.push(input[j].value);
+                break;
 
-//                     tituloDoQuiz = string[i].value;
-//                    ativaValidacao(i);
-//                 }
-//             break;
+                case 3:
+                    descricaoNiveis.push(input[j].value);
+                break;
+            }
+        }  
+        
+        verificaNivelQuiz(input);
+    }
 
-//             case 1:
-
-//                 const pattern = /^https:\/\//i;
-//                 if(!(pattern.test(string[i].value))){
-//                     console.log("caso 2: Preencha os dados corretamente");
-//                     erroValidacao(i);
-//                 }else {
-
-//                     urlImagem = string[i].value;
-//                     ativaValidacao(i);
-//                 }
-//             break;
-
-//             case 2:
-//                 if(string[i].value < '3'){
-//                     console.log("caso 3: Preencha os dados corretamente");
-//                     erroValidacao(i);
-
-                    
-//                 }else{
-
-//                     quantidadePerguntas = string[i].value;
-//                     ativaValidacao(i);
-//                 }
-//             break;
-
-//             case 3:
-//                 if(string[i].value < '2'){
-//                     console.log(" caso 4: Preencha os dados corretamente");
-//                     erroValidacao(i);
-//                 }else{
-
-//                     quantidadeNivel = string[i].value;
-//                     ativaValidacao(i);
-//                 }
-//             break;
-//         }   
-
-//     }
-
-//     console.log(tituloDoQuiz + "\n" +
-//                     urlImagem + "\n" +
-//                     quantidadePerguntas + "\n" +
-//                     quantidadeNivel)
-
-//     if(verficaSeTudoFoiPreeenchido()){
-//         mudaPagina();
-//     }
 
     
-// }
+    verificaZero();
+
+    if(verficaSeTudoFoiPreeenchido("niveis")){
+        mudaPagina("tela_3_3");
+    }
+   
+}
+
+function niveisQuiz(){
+
+    const div = document.querySelector(".niveis-quiz");
+    let html ="";
+
+    console.log(quantidadeNivel);
+    
+    for(let i = 1; i <= quantidadeNivel; i++){
+        html += `<div class="niveis"> 
+
+                    <div class="titulo">
+                        <h2> Nível ${i} </h2> <ion-icon name="create-outline"></ion-icon> 
+                    </div>
+
+                    <div class="barra-animada">
+                        <input type="text" placeholder="Título do nível">
+                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <input type="text" placeholder="% de acerto mínima">
+                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <input type="text" placeholder="URL da imagem do nível">
+                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <textarea placeholder="Descrição do nível"></textarea>
+                        <p class="escondido"> Preencha os dados corretamente </p>
+                    </div>
+        </div>`
+    }
+
+    div.innerHTML = html;
+
+}
+
+
 
 
 
