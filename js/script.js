@@ -1,26 +1,28 @@
 // CÓDIGO SUSANA ABAIXO --------------------------------------
 
-
-
+// API BuzzQuizz
 const urlAPI = 'https://mock-api.driven.com.br/api/v4/buzzquizz';
 
+// todos os quizzes
 let allGetQuizzes = [];
 
+// lista sorteada
 let userListId = [0, 1, 2, 3];
 
 
 // GET TODOS OS QUIZZES
-
 function getQuizzes() {
+    // obtendo todos os quizzes
     const promisseGET = axios.get(`${urlAPI}/quizzes`);
-    promisseGET.then(renderingQuizzes);
+    promisseGET.then(renderingQuizzes); // renderizando todos os quizzes
     promisseGET.catch(errorGetQuizzes);
 }
-
+// msgm de erro ao buscar todos os quizzes
 function errorGetQuizzes() {
     console.log('ERROR SEARCHING QUIZZES!');
 }
 
+// renderizando todos os quizzes
 function renderingQuizzes(response) {
 
     allGetQuizzes = response.data;
@@ -45,7 +47,7 @@ function renderingQuizzes(response) {
 
 
 // GET QUIZZES USUÁRIO
-
+// pega os quizzes do usuário
 function getUserQuizzes() {
     let userQuizzes = localStorage.getItem('userQuizzes');
 
@@ -56,9 +58,11 @@ function getUserQuizzes() {
             userListId.push(quiz);
         }   
     }
+    // renderiza a lista de quizzes do usuário
     renderingUserQuizzes();
 };
 
+// renderiza quizzes do usuário
 function renderingUserQuizzes() {
 
     if(userListId.length > 0) {
@@ -79,6 +83,7 @@ function renderingUserQuizzes() {
     }
 };
 
+// retorna todos os seus quizzes 
 function allYourQuizzes(idQuizzes, imgUrl, title) {
     return `
     <div class="box-quiz" onclick="goQuizPage()" idQuizzes="${idQuizzes}">
@@ -89,6 +94,7 @@ function allYourQuizzes(idQuizzes, imgUrl, title) {
     `
 };
 
+// verifica se existe algum quizz do usuário, caso não html é mudado
 function checkExistsUserQuiz() {
     const nonetQuizzesCreated = document.querySelector('.quiz-not-created');
     const quizzesCreated = document.querySelector('.your-quizzes');
@@ -107,7 +113,6 @@ checkExistsUserQuiz();
 
 
 // BUSCANDO QUIZZES CRIADO PELO USER, SE NÃO HOUVER CRIA UM ARRAY VAZIO, SE HOUVER TRANSFORMA STRING EM ARRAY E ADD NO LOCAL STORAGE
-
 function saveLocalStorage(createdId) {
     let userQuizzes;
 
@@ -122,14 +127,12 @@ function saveLocalStorage(createdId) {
 }
 
 // FUNÇÃO PARA A PROMISE.THEN DO QUIZZES CRIADO
-
 function quizzesCreatedSuccess(response) {
     saveLocalStorage(response.data.id);
     renderSuccessQuizzes(response.data);
 }
 
 // VAI P/ TELA 2 DE PÁGINA DE QUIZZES
-
 function goQuizPage() { // Ao clicar sobre o quizz, esta tela deve sumir e dar lugar à Tela 2: Página de um quizz.
     const quizzesListScreen = document.querySelector('.container');
     const quizPage = document.querySelector('.containerQuizPage'); // add a página correta depois. 
@@ -138,7 +141,6 @@ function goQuizPage() { // Ao clicar sobre o quizz, esta tela deve sumir e dar l
 }
 
 // VAI P/ TELA 3 DE CRIAÇÃO DE QUIZZES
-
 function goQuizCreation() { // Ao clicar em "Criar Quizz" ou no "+" essa tela deve sumir, dando lugar à tela de Tela 3: Criação de Quizz.
     const quizzesListScreen = document.querySelector('.container');
     const quizzesCreationScreen = document.querySelector('.containerQuizzesCreation'); // add a página correta depois. 
@@ -151,8 +153,6 @@ getQuizzes();
 renderingQuizzes();
 getUserQuizzes();
 renderingUserQuizzes();
-
-
 
 
 
