@@ -1,3 +1,5 @@
+<!-- // CÓDIGO SUSANA ABAIXO -------------------------------------- -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -19,17 +21,42 @@
         </header>
 
         <div class="main-container">
-            <aside>
+            <aside class="quiz-not-created">
                 <div class="create-quiz">
                     <p>Você não criou nenhum<br>quizz ainda :(</p>
-                    <button>Criar Quizz</button>
+                    <button onclick="goQuizCreation()">Criar Quizz</button>
                 </div>
             </aside>
 
-            <main>
+            <section class="your-quizzes">
+                <p>
+                    Seus Quizzes
+                    <ion-icon name="add-circle" onclick="goQuizCreation()"></ion-icon>
+                </p>
+                <div class="quizzes">
+                    <!-- <div class="box-quiz" onclick="goQuizPage()">
+                        <img src="./img/simpsons.png" />
+                        <figcaption>Acerte os personagens corretos dos Simpsons e prove seu amor!</figcaption>
+                        <div class="background"></div>
+                    </div>
+                    <div class="box-quiz">
+                        <img src="./img/bicho-preguiça.png" />
+                        <figcaption>O quanto você é de boas?</figcaption>
+                        <div class="background"></div>
+                    </div>
+                    <div class="box-quiz">
+                        <img src="./img/simpsons.png" />
+                        <figcaption>Acerte os personagens corretos dos Simpsons e prove seu amor!</figcaption>
+                        <div class="background"></div>
+                    </div> -->
+                </div>
+            </section>
+
+
+            <main class="all-quizzes">
                 <p>Todos os Quizzes</p>
                 <div class="quizzes">
-                    <div class="box-quiz">
+                    <!-- <div class="box-quiz">
                         <img src="./img/simpsons.png" />
                         <figcaption>Acerte os personagens corretos dos Simpsons e prove seu amor!</figcaption>
                     </div>
@@ -52,17 +79,32 @@
                     <div class="box-quiz">
                         <img src="./img/simpsons.png" />
                         <figcaption>Acerte os personagens corretos dos Simpsons e prove seu amor!</figcaption>
-                    </div>
+                    </div> -->
                 </div>
             </main>
 
         </div>
     </div>
 
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./js/script.js"></script>
 </body>
 
 </html>
+
+
+
+
+<!-- CÓDIGO SUSANA ACIMA -------------------------------------- -->
+
+
+
+<!-- CÓDIGO TAIS ABAIXO -------------------------------------- -->
+
+
+
+
 
 <!-- </body>
         <aside class="tela_3_1"> 
@@ -85,3 +127,9 @@
 
         <script src="./js/script.js"></script>
     </body> -->
+
+
+
+
+
+<!-- CÓDIGO TAIS ACIMA -------------------------------------- -->
