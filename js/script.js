@@ -7,13 +7,13 @@ let allGetQuizzes = [];
 
 let userListId = [0, 1, 2, 3];
 
-let tituloDoQuiz; 
+let tituloDoQuiz;
 
 let urlImagem;
 
 let quantidadePerguntas;
 
-let quantidadeNivel;  
+let quantidadeNivel;
 
 let titulosDosNiveis = [];
 let porcentagemNiveis = [];
@@ -45,7 +45,7 @@ function renderingQuizzes(response) {
 
     allQuizzes.innerHTML = '';
 
-    for(let i = 0; i < allGetQuizzes.length; i++) {
+    for (let i = 0; i < allGetQuizzes.length; i++) {
 
         let templates = `
             <div class="box-quiz" onclick="goQuizPage(${allGetQuizzes[i].id})">
@@ -65,31 +65,31 @@ function renderingQuizzes(response) {
 function getUserQuizzes() {
     let userQuizzes = localStorage.getItem('userQuizzes');
 
-    if(userQuizzes) {
+    if (userQuizzes) {
         let listId = JSON.parse(userQuizzes);
-        for(let id = 0; id < listId.length; id++) {
+        for (let id = 0; id < listId.length; id++) {
             let quiz = listId[id];
             userListId.push(quiz);
-        }   
+        }
     }
     renderingUserQuizzes();
 };
 
 function renderingUserQuizzes() {
 
-    if(userListId.length > 0) {
+    if (userListId.length > 0) {
         const listUserQuizzes = document.querySelector('.quizzes');
 
         listUserQuizzes.innerHTML = '';
 
-        for(let i = 0; i < userListId.length; i++) {
+        for (let i = 0; i < userListId.length; i++) {
             let idQuizzes = userListId[i];
 
-            const promisseGET = axios.get(`${urlAPI}/quizzes/${idQuizzes}`); 
+            const promisseGET = axios.get(`${urlAPI}/quizzes/${idQuizzes}`);
             promisseGET.then((response) => {
                 let quizzez = response.data;
-                listUserQuizzes.innerHTML += 
-                allYourQuizzes(quizzez.title, quizzez.image, quizzez.id);
+                listUserQuizzes.innerHTML +=
+                    allYourQuizzes(quizzez.title, quizzez.image, quizzez.id);
             });
         }
     }
@@ -109,11 +109,11 @@ function checkExistsUserQuiz() {
     const nonetQuizzesCreated = document.querySelector('.quiz-not-created');
     const quizzesCreated = document.querySelector('.your-quizzes');
 
-    if(localStorage.length === 0) {
+    if (localStorage.length === 0) {
         nonetQuizzesCreated.classList.remove('hidden');
         quizzesCreated.classList.add('hidden');
     }
-    if(localStorage.length != 0) {
+    if (localStorage.length != 0) {
         renderingUserQuizzes()
         nonetQuizzesCreated.classList.add('hidden');
         quizzesCreated.classList.remove('hidden');
@@ -127,7 +127,7 @@ checkExistsUserQuiz();
 function saveLocalStorage(createdId) {
     let userQuizzes;
 
-    if(!localStorage.getItem('userQuizzes')) {
+    if (!localStorage.getItem('userQuizzes')) {
         userQuizzes = [];
     } else {
         userQuizzes = JSON.parse(localStorage.getItem('userQuizzes'));
@@ -174,51 +174,51 @@ renderingUserQuizzes();
 
 // CÓDIGO TAIS ABAIXO --------------------------------------
 
-function erroValidacaoInfo(i){
+function erroValidacaoInfo(i) {
 
     const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
     paragrafo[i].classList.remove("escondido");
 }
 
-function erroValidacaoNivel(local){
+function erroValidacaoNivel(local) {
 
     const paragrafo = local.nextElementSibling;
     paragrafo.classList.remove("escondido");
 }
 
-function ativaValidacaoNivel(local){
+function ativaValidacaoNivel(local) {
     const paragrafo = local.nextElementSibling;
     paragrafo.classList.add("escondido");
 }
 
-function ativaValidacaoInfo(i){
+function ativaValidacaoInfo(i) {
 
     const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
     paragrafo[i].classList.add("escondido");
 }
 
-function verficaSeTudoFoiPreeenchido(classe){
+function verficaSeTudoFoiPreeenchido(classe) {
 
     //const paragrafo = document.querySelectorAll(" .info-basica-quiz p");
     const paragrafo = document.querySelectorAll(`.${classe} p`);
 
     console.log(paragrafo);
     const condicao = [];
-    for(let i = 0; i<paragrafo.length; i++){
-        if(!(paragrafo[i].classList.contains("escondido"))){
+    for (let i = 0; i < paragrafo.length; i++) {
+        if (!(paragrafo[i].classList.contains("escondido"))) {
             condicao.push(paragrafo[i].classList.contains("escondido"))
         }
     }
 
-   if(condicao.length !== 0){
-             return;
+    if (condicao.length !== 0) {
+        return;
     }
 
-     return true;
-    
+    return true;
+
 }
 
-function mudaPagina(local, local2){ 
+function mudaPagina(local, local2) {
 
     const tela1 = document.querySelector(`.${local}`);
     const tela2 = document.querySelector(`.${local2}`);
@@ -227,186 +227,188 @@ function mudaPagina(local, local2){
     tela2.classList.remove("escondido");
 }
 
- function verificaInfoBasicaQuiz(){
+function verificaInfoBasicaQuiz() {
 
-    let string="";   
+    let string = "";
     string = document.querySelectorAll(".info-basica-quiz input");
 
-    for(let i = 0; i < string.length;i++){
+    for (let i = 0; i < string.length; i++) {
 
-        switch (i){
+        switch (i) {
 
             case 0:
-                if(!(20 <= string[i].value.length && string[i].value.length <= 65)){
+                if (!(20 <= string[i].value.length && string[i].value.length <= 65)) {
                     erroValidacaoInfo(i);
                 }
-                else{
+                else {
 
                     tituloDoQuiz = string[i].value;
                     ativaValidacaoInfo(i);
-                 }
-             break;
+                }
+                break;
 
-             case 1:
+            case 1:
 
-                if(!(pattern.test(string[i].value))){
+                if (!(pattern.test(string[i].value))) {
                     erroValidacaoInfo(i);
-                }else {
+                } else {
 
-                     urlImagem = string[i].value;
-                     ativaValidacaoInfo(i);}             
-            break;
+                    urlImagem = string[i].value;
+                    ativaValidacaoInfo(i);
+                }
+                break;
 
             case 2:
-                if(string[i].value < '3'){
+                if (string[i].value < '3') {
                     erroValidacaoInfo(i);
-                 }else{
+                } else {
 
-                     quantidadePerguntas = string[i].value;
-                     ativaValidacaoInfo(i);
-                 }
-             break;
+                    quantidadePerguntas = string[i].value;
+                    ativaValidacaoInfo(i);
+                }
+                break;
 
             case 3:
-                if(string[i].value < '2'){
+                if (string[i].value < '2') {
                     erroValidacaoInfo(i);
-                }else{
+                } else {
 
-                     quantidadeNivel = string[i].value;
-                     ativaValidacaoInfo(i);
-                 }
-           break;
-       }   
+                    quantidadeNivel = string[i].value;
+                    ativaValidacaoInfo(i);
+                }
+                break;
+        }
 
     }
 
-    if(verficaSeTudoFoiPreeenchido("info-basica-quiz")){
-        mudaPagina("tela_3_1","tela_3_3");
+    if (verficaSeTudoFoiPreeenchido("info-basica-quiz")) {
+        mudaPagina("tela_3_1", "tela_3_2");
+        renderizarPerguntas();
         niveisQuiz();
     }
 }
 
-function verificaZero(){
+function verificaZero() {
 
     let novo = [];
 
-    porcentagemNiveis.forEach( (num) => {
-                                            if(!novo.includes(num)){
-                                                novo.push(num);
-                                            }
+    porcentagemNiveis.forEach((num) => {
+        if (!novo.includes(num)) {
+            novo.push(num);
+        }
     });
 
-    for(let i = 0; i<zero.length; i++){
-        if(!(porcentagemNiveis.includes("0")) || novo.length !== porcentagemNiveis.length){
+    for (let i = 0; i < zero.length; i++) {
+        if (!(porcentagemNiveis.includes("0")) || novo.length !== porcentagemNiveis.length) {
             erroValidacaoNivel(zero[i]);
-        }else{
+        } else {
             ativaValidacaoNivel(zero[i]);
         }
     }
 }
 
-function verificaNivelQuiz(input){
+function verificaNivelQuiz(input) {
 
-    for(let i = 0; i<input.length; i++){
+    for (let i = 0; i < input.length; i++) {
 
-        switch (i){
+        switch (i) {
 
             case 0:
-                if((input[i].value <= 10)){
+                if ((input[i].value <= 10)) {
                     erroValidacaoNivel(input[i]);
-                }else{
+                } else {
                     ativaValidacaoNivel(input[i]);
                 }
-            break;
+                break;
 
             case 1:
                 zero.push(input[i]);
-                if((input[i].value < 0 || input[i].value > 100 || input[i].value === "")){
+                if ((input[i].value < 0 || input[i].value > 100 || input[i].value === "")) {
                     erroValidacaoNivel(input[i]);
-                }else{
+                } else {
                     ativaValidacaoNivel(input[i]);
                 }
-            break;
+                break;
 
             case 2:
-                if(!(pattern.test(input[i].value))){
+                if (!(pattern.test(input[i].value))) {
                     erroValidacaoNivel(input[i]);
-                }else{
+                } else {
                     ativaValidacaoNivel(input[i]);
                 }
-            break;
+                break;
 
             case 3:
-                if(input[i].value < 30){
-                     erroValidacaoNivel(input[i]);
-                }else{
+                if (input[i].value < 30) {
+                    erroValidacaoNivel(input[i]);
+                } else {
                     ativaValidacaoNivel(input[i]);
                 }
-            break;
+                break;
 
-        }    
-    }     
-    
+        }
+    }
+
 }
- 
-function pegaElementosNivelQuiz(){
+
+function pegaElementosNivelQuiz() {
 
     titulosDosNiveis = [];
     porcentagemNiveis = [];
     urlImagemNiveis = [];
-    descricaoNiveis =[];
-    
-   const div = document.querySelectorAll(".barra-animada");
-   let input="";
+    descricaoNiveis = [];
+
+    const div = document.querySelectorAll(".barra-animada");
+    let input = "";
 
 
-    for(let i = 0 ; i < div.length ; i++){
+    for (let i = 0; i < div.length; i++) {
 
         input = div[i].querySelectorAll("input, textarea");
-        
-        for(let j = 0 ; j < input.length; j++){
-            
-            switch (j){
+
+        for (let j = 0; j < input.length; j++) {
+
+            switch (j) {
 
                 case 0:
                     titulosDosNiveis.push(input[j].value);
-                break;
+                    break;
 
                 case 1:
                     porcentagemNiveis.push(input[j].value);
-                break;
+                    break;
 
                 case 2:
                     urlImagemNiveis.push(input[j].value);
-                break;
+                    break;
 
                 case 3:
                     descricaoNiveis.push(input[j].value);
-                break;
+                    break;
             }
-        }  
-        
+        }
+
         verificaNivelQuiz(input);
     }
 
 
-    
+
     verificaZero();
 
-    if(verficaSeTudoFoiPreeenchido("niveis")){
+    if (verficaSeTudoFoiPreeenchido("niveis")) {
         mudaPagina("tela_3_3");
     }
-   
+
 }
 
-function niveisQuiz(){
+function niveisQuiz() {
 
     const div = document.querySelector(".niveis-quiz");
-    let html ="";
+    let html = "";
 
     console.log(quantidadeNivel);
-    
-    for(let i = 1; i <= quantidadeNivel; i++){
+
+    for (let i = 1; i <= quantidadeNivel; i++) {
         html += `<div class="niveis"> 
 
                     <div class="titulo">
@@ -431,6 +433,7 @@ function niveisQuiz(){
 }
 
 // -----------------------------------------------código santiago---------------------------------------
+
 function editarPergunta(elemento) {
     const editando = elemento.nextElementSibling;
 
@@ -496,10 +499,12 @@ function verificaPerguntas() {
     textoPergunta = document.querySelectorAll(".titulo-pergunta");
 
     for (let i = 0; i < textoPergunta.length; i++) {
+        const input = textoPergunta[i];
+        const paragrafo = input.nextElementSibling;
         if (textoPergunta[i].value.length < 20) {
-            const input = textoPergunta[i];
-            const paragrafo = input.nextElementSibling;
             paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
         }
     }
 
@@ -507,10 +512,12 @@ function verificaPerguntas() {
     corDeFundo = document.querySelectorAll(".cor-de-fundo");
 
     for (let i = 0; i < corDeFundo.length; i++) {
+        const input = corDeFundo[i];
+        const paragrafo = input.nextElementSibling;
         if (corDeFundo[i].value.length !== 7 || corDeFundo[i].value.indexOf('#') !== 0) {
-            const input = corDeFundo[i];
-            const paragrafo = input.nextElementSibling;
             paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
         }
     }
 
@@ -518,10 +525,12 @@ function verificaPerguntas() {
     respostaCorreta = document.querySelectorAll(".resposta-correta");
 
     for (let i = 0; i < respostaCorreta.length; i++) {
-        if (respostaCorreta[i].value.length == 0) {
-            const input = respostaCorreta[i];
-            const paragrafo = input.nextElementSibling;
+        const input = respostaCorreta[i];
+        const paragrafo = input.nextElementSibling;
+        if (respostaCorreta[i].value.length === 0) {
             paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
         }
     }
 
@@ -529,10 +538,12 @@ function verificaPerguntas() {
     urlImagemCorreta = document.querySelectorAll(".url-correta");
 
     for (let i = 0; i < urlImagemCorreta.length; i++) {
+        const input = urlImagemCorreta[i];
+        const paragrafo = input.nextElementSibling;
         if (!(pattern.test(urlImagemCorreta[i].value))) {
-            const input = urlImagemCorreta[i];
-            const paragrafo = input.nextElementSibling;
             paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
         }
     }
 
@@ -540,10 +551,12 @@ function verificaPerguntas() {
     respostaIncorreta1 = document.querySelectorAll(".resposta-incorreta-um");
 
     for (let i = 0; i < respostaIncorreta1.length; i++) {
+        const input = respostaIncorreta1[i];
+        const paragrafo = input.nextElementSibling;
         if (respostaIncorreta1[i].value.length == 0) {
-            const input = respostaIncorreta1[i];
-            const paragrafo = input.nextElementSibling;
             paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
         }
     }
 
@@ -551,12 +564,17 @@ function verificaPerguntas() {
     urlImagemIncorreta1 = document.querySelectorAll(".url-incorreta-um");
 
     for (let i = 0; i < urlImagemIncorreta1.length; i++) {
+        const input = urlImagemIncorreta1[i];
+        const paragrafo = input.nextElementSibling;
         if (!(pattern.test(urlImagemIncorreta1[i].value))) {
-            const input = urlImagemIncorreta1[i];
-            const paragrafo = input.nextElementSibling;
             paragrafo.classList.remove("escondido");
+        } else {
+            paragrafo.classList.add("escondido");
         }
     }
-}
 
+    if (verficaSeTudoFoiPreeenchido("input-duplo")) {
+        mudaPagina("tela_3_2", "tela_3_3");
+    }
+}
 // CÓDIGO TAIS ABAIXO --------------------------------------

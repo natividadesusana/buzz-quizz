@@ -4,8 +4,8 @@
 
 /* body */
 
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
 /*body {
@@ -190,11 +190,9 @@ header p {
   position: absolute;
   bottom: 13px;
   left: 0px;
-  background-image: linear-gradient(
-    to bottom,
-    rgb(0, 0, 0, 0),
-    rgb(0, 0, 0, 1)
-  );
+  background-image: linear-gradient(to bottom,
+      rgb(0, 0, 0, 0),
+      rgb(0, 0, 0, 1));
 }
 
 .your-quizzes {
@@ -243,125 +241,122 @@ header p {
 
 /* =========================================== tela 3.1 ================================*/
 .tela_3_1,
-.tela_3_3{ 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    margin: 90px auto;
+.tela_3_3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    font-family: 'Roboto';
+  margin: 90px auto;
+
+  font-family: 'Roboto';
 }
 
 .tela_3_1 h1,
-.tela_3_3 h1{
+.tela_3_3 h1 {
 
-    font-style: normal;
-    font-weight: 700;
-    font-size:20px;
-    color: #000000;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000000;
 
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 
-    
+
 }
 
-.info-basica-quiz{
+.info-basica-quiz {
 
-    width: 600px;
-    height: 270px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-    padding-left: 20px;
-    padding-top: 20px;
+  width: 600px;
+  height: 270px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+  padding-left: 20px;
+  padding-top: 20px;
 
-    
+
 }
 
 .info-basica-quiz input,
 .niveis-quiz input,
-.niveis-quiz textarea{
+.niveis-quiz textarea {
 
-    width: 565px;
-    height: 50px;
+  width: 565px;
+  height: 50px;
 
-    font-style: italic;
-    font-weight: 400;
-    font-size: 19px;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 19px;
 
-    color: #BABABA;
-    background: #FFFFFF;
+  color: #BABABA;
+  background: #FFFFFF;
 
-    border: 1px solid #D1D1D1;
-    border-radius: 5px;
+  border: 1px solid #D1D1D1;
+  border-radius: 5px;
 
-    margin-bottom: 10px;
-    padding-top: 5px;
+  margin-bottom: 10px;
+  padding-top: 5px;
 
-    resize:none;
+  resize: none;
 }
 
 .tela_3_1 button,
-.tela_3_3 button{
+.tela_3_3 button {
 
-    width: 370px;
-    height: 55px;
+  width: 370px;
+  height: 55px;
 
-    margin-top: 85px;
+  margin-top: 85px;
 
 
-    border: none;
-    background-color: #EC362D;
-    border-radius: 15px;
+  border: none;
+  background-color: #EC362D;
+  border-radius: 15px;
 
-    font-style: normal;
-    font-weight: 400;
-    font-size: 21px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 21px;
 
-    color: #FFF5F4;
+  color: #FFF5F4;
 
 
 }
 
 .tela_3_1 p,
-.tela_3_3 p{
-    color:red;
+.tela_3_3 p {
+  color: red;
 }
 
-.escondido{
-    display: none;
-} */
 /* =========================================== fim estilo tela 3.1 ================================*/
 
 /*============================================  estilo tela 3.3  =============================== */
 
 
-.niveis-quiz h2{
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    color: #000000;
+.niveis-quiz h2 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000000;
 
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
-.niveis{
+.niveis {
 
-    width: 600px;
-    height: 400px;
-    background-color: lightblue;
+  width: 600px;
+  height: 400px;
+  background-color: lightblue;
 
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
 
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 
-    padding: 20px;
+  padding: 20px;
 }
 
-.titulo{
+.titulo {
 
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 
@@ -440,6 +435,9 @@ header p {
   color: red;
 }
 
+.escondido {
+  display: none;
+}
 
 /* mobile layout */
 
@@ -471,24 +469,22 @@ header p {
   .your-quizzes p {
     justify-content: space-between;
   }
-    .info-basica-quiz,
-    .info-basica-quiz input,
-    .tela_3_1 button,
-    .niveis-quiz input,
-    .niveis-quiz textarea,
-    .niveis{
-        width:100%;
-    }
 
-    .niveis{
-      height: 500px;
-    }
+  .info-basica-quiz,
+  .info-basica-quiz input,
+  .tela_3_1 button,
+  .niveis-quiz input,
+  .niveis-quiz textarea,
+  .niveis {
+    width: 100%;
+  }
 
-    .niveis-quiz textarea{
-      height: 180px;
-    }
+  .niveis {
+    height: 500px;
+  }
 
-} 
+  .niveis-quiz textarea {
+    height: 180px;
+  }
 
-
-
+}
