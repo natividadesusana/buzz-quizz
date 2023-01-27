@@ -41,6 +41,9 @@ let questions = 0;
 let quantidadePerguntasQuiz;
 let cont = 0;
 
+let objetoQuiz = [];
+let acertos = 0;
+
 
 
 // GET TODOS OS QUIZZES
@@ -176,15 +179,64 @@ function quizzesCreatedSuccess(response) {
 };
 
 
-function getNivel (){
-    console.log("to no nivel");
-    console.log(respostasEscolhidas);
+
+function getNivel (acertos){
+    
+    const local = document.querySelector(".tela_2");
+    const niveis = objetoQuiz.levels;
+    let html = "";
+
+    let calc = Math.floor((100 * acertos)/quantidadePerguntasQuiz);
+
+    let tituloNivel;
+    let imgNivel;
+    let textoNivel;
+
+    console.log(niveis);
+    console.log(calc);
+
+    for (let i = 0; i< niveis.length; i++){
+        if(calc >= niveis[i].minValue)
+        {
+             tituloNivel = niveis[i].title;
+             imgNivel = niveis[i].image;
+             textoNivel = niveis[i].text;
+        }
+    }
+
+    html += `<div class = "exibe-nivel">
+                <div class = "titulo-nivel">
+                    <h1> ${tituloNivel} </h1>
+                </div>
+
+                <div class="corpo-nivel">
+                    <img class = "imagem-nivel" src="${imgNivel}" alt="">
+                    <p class="texto-nivel"> ${textoNivel} </p>
+                </div>
+
+                <div class = "botoes-nivel">
+                    <button onclick="restartQuizz()" class="botao-reinicio"> Reiniciar Quiz </button>
+                    <button onclick="comeBackHome()" class="voltarHome"> Voltar pra Home </button>
+                </div>
+
+            </div>`
+
+    local.innerHTML += html;
+    
+    console.log(local);
+
+    console.log(tituloNivel);
+    console.log(imgNivel);
+    console.log(textoNivel);
+
 }
+
 
 function selecionaResposta(getEscolhida){
 
     let answersChoose;
     let nome;
+    let aux = 0;
 
     cont++;
     
@@ -208,32 +260,41 @@ function selecionaResposta(getEscolhida){
         
         if(answersChoose.parentNode.children[i] !== answersChoose){
 
-            answersChoose.parentNode.children[i].querySelector("img").classList.add("esbranquiçado");
+            answersChoose.parentNode.children[i].querySelector("img").classList.add("esbranquicado");
             answersChoose.parentNode.children[i].removeAttribute("onclick");
             
-            if(nome !== armazenaCorretas[cont-1]){
+            if(nome !== armazenaCorretas[cont-1] || aux === 1 ){
                 answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-vermelho");
             } else{
+                aux = 1;
                 answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-verde");
             }
         }else{
 
-            if(nome !== armazenaCorretas[cont-1]){
+            if(nome !== armazenaCorretas[cont-1] || aux === 1 ){
                 answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-vermelho");
-            } else{
+            } else {
+                
+                aux = 1;
+                acertos++;
                 answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-verde");
             }
             answersChoose.parentNode.children[i].removeAttribute("onclick");
         }
-    }
 
+    }
 
     if(cont != 3){
         setTimeout (() => { answersChoose.parentNode.parentNode.nextElementSibling.scrollIntoView()
             travaTela = false;
         }, 2000);
     } else{
-            getNivel();
+
+        setTimeout (() => { getNivel(acertos);
+            const local = document.querySelector(".exibe-nivel");
+            local.scrollIntoView();
+        }, 2000);
+            
     }
 }
 
@@ -308,9 +369,6 @@ function goQuizPage(quizEscolhido) { // Ao clicar sobre o quizz, esta tela deve 
     console.log(quizEscolhido);
     console.log(allGetQuizzes);
     
-    let objetoQuiz = [];
-    
-
     for(let i = 0; i < allGetQuizzes.length; i++){
         if(allGetQuizzes[i].id === quizEscolhido){
             objetoQuiz = allGetQuizzes[i];
@@ -415,6 +473,8 @@ function verficaSeTudoFoiPreeenchido(classe) {
 }
 
 function mudaPagina(local, local2) {
+
+    window.scrollTo(0,0);
 
     const tela1 = document.querySelector(`.${local}`);
     const tela2 = document.querySelector(`.${local2}`);
@@ -597,6 +657,15 @@ function pegaElementosNivelQuiz() {
 
 }
 
+function editarNivel(elemento){
+
+    const editando = elemento.nextElementSibling;
+
+    if (editando.classList.contains("escondido") === true) {
+        editando.classList.remove("escondido");
+    } 
+}
+
 function niveisQuiz() {
 
     const div = document.querySelector(".niveis-quiz");
@@ -607,11 +676,11 @@ function niveisQuiz() {
     for (let i = 1; i <= quantidadeNivel; i++) {
         html += `<div class="niveis"> 
 
-                    <div class="titulo">
+                    <div onclick="editarNivel(this)" class="titulo">
                         <h2> Nível ${i} </h2> <ion-icon name="create-outline"></ion-icon> 
                     </div>
 
-                    <div class="barra-animada">
+                    <div class="barra-animada escondido">
                         <input type="text" placeholder="Título do nível">
                         <p class="escondido"> Preencha os dados corretamente </p>
                         <input type="text" placeholder="% de acerto mínima">
@@ -774,6 +843,30 @@ function verificaPerguntas() {
     }
 }
 // CÓDIGO TAIS ABAIXO --------------------------------------
+
+function restartQuizz() {
+    // respostas zeradas pro estado inicial
+
+
+    console.log(" entrei aqui");
+    
+    armazenaCorretas = [];
+    acertos = 0;
+    cont = 0;
+    travaTela = false;
+
+    const getHtmlScreen2 = document.querySelector('tela_2'); // add html correto
+    const getHtmlNivel = document.querySelector(".exibe-nivel");
+     // tela 2 scrollada novamente para o topo
+    //add função correta e parâmetro correto
+    getPerguntas(objetoQuiz);
+    window.scrollTo(1000,0);
+    getHtmlNivel.innerHTML = "";
+}
+
+function comeBackHome(){
+    mudaPagina("tela_2", "main-container");
+}
 
 getQuizzes();
 renderingQuizzes();

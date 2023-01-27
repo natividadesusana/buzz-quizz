@@ -236,9 +236,22 @@ header p {
 /* ====================================== tela 2 =======================================*/
 
 .tela_2{
-  overflow: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+
+  display: flex;
+  flex-direction: column;
+  
+
+  width: 800px;
+  height: 100%;
+
+  margin: 0 auto;
+
+  margin-top: 146px;
+
+  scroll-behavior:smooth;
+  overflow: hidden;
+
+  
 }
 
 
@@ -286,21 +299,6 @@ header p {
   color:#FFFFFF;
 
   text-align: center;
-}
-
-.exibe-perguntas{
-
-  display: flex;
-  flex-direction: column;
-  
-
-  width: 800px;
-  height: 100%;
-
-  margin: 0 auto;
-
-  margin-top: 50px;
-  
 }
 
 .questions{
@@ -359,6 +357,10 @@ header p {
   font-size: 20px;
   line-height: 23px;
 
+  display: flex;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+
 }
 
 .muda-vermelho{
@@ -369,7 +371,7 @@ header p {
   color: #009C22;
 }
 
-.esbranquiçado{
+.esbranquicado{
   opacity: 0.3;
 }
 
@@ -386,7 +388,100 @@ header p {
   padding: 30px;
   border-radius: 0px;
 }
+.exibe-nivel{
+  padding: 20px;
+}
 
+.titulo-nivel{
+  width: 100%;
+  height: 100px;
+  background-color: #EC362D;
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 22px;
+
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+.corpo-nivel{
+  width: 100%;
+  height: 450px;
+
+  display: flex;
+
+  margin-top: 20px;
+}
+
+.imagem-nivel{
+  width: 370px;
+  height: 270px;
+}
+
+.texto-nivel{
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 25px;
+  
+  color: #484848;
+
+  margin-left: 20px;
+  
+}
+
+.botoes-nivel{
+  width: 100%;
+  height: 100px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+}
+
+.botao-reinicio{
+  
+  width: 261px;
+  height: 55px;
+
+  border: none;
+  background-color: #EC362D;
+  border-radius: 15px;
+
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+
+  color: #FFF5F4;
+}
+
+.voltarHome{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 25px;
+  
+  color: #818181;
+
+  background-color: #FFFFFF;
+
+  border: none;
+
+  margin-top:20px;
+}
 
 /* =========================================== tela 3.1 ================================*/
 .tela_3_1,
@@ -397,6 +492,7 @@ header p {
 
     font-family: 'Roboto';
 
+    margin-top: 146px;
     padding: 20px;
 }
 
@@ -451,7 +547,7 @@ header p {
 }
 
 .tela_3_1 button,
-.tela_3_3 button {
+.tela_3_3 button{
 
   width: 370px;
   height: 55px;
@@ -498,8 +594,6 @@ header p {
 .niveis {
 
   width: 600px;
-  height: 400px;
-  background-color: lightblue;
 
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
 
@@ -660,7 +754,8 @@ header p {
   }
   .exibe-perguntas,
   .questions,
-  .title-question{
+  .title-question,
+  .tela_2{
     width: 100%;
   }
 
@@ -681,11 +776,21 @@ header p {
 
   }
 
+  .exibe-resposta p{
+    font-size: 13px;
+    
+
+  }
+
   .exibe-resposta{
     padding: 10px;
   }
 
   .title-question{
+
+    height: 89px;
+    font-weight: 700;
+    font-size: 19px;
     margin-bottom: 15px;
   }
 
