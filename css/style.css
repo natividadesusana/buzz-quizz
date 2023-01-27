@@ -8,11 +8,11 @@
   box-sizing: border-box;
 }
 
-/*body {
+body {
   display: flex;
   justify-content: center;
   align-items: center;
-}*/
+}
 
 /* container */
 
@@ -163,23 +163,20 @@ header p {
 }
 
 .box-quiz figcaption {
-  width: 100%;
+  width: 300px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 19px;
   line-height: 22px;
   color: #ffffff;
+  margin: 30px 25px;
 
   position: absolute;
-  bottom: 14px;
-  left: 20px;
-  height: 50px;
+  bottom: 0px;
   z-index: 1;
 
-  display: flex;
-  justify-content: left;
-  align-items: center;
   cursor: pointer;
+  word-wrap: break-word;
 }
 
 .background {
@@ -311,6 +308,7 @@ header p {
   border: none;
   background-color: #EC362D;
   border-radius: 15px;
+  cursor: pointer;
 
   font-style: normal;
   font-weight: 400;
@@ -429,6 +427,7 @@ header p {
   font-weight: 400;
   font-size: 21px;
   color: #FFF5F4;
+  cursor: pointer;
 }
 
 .tela_3_2 p {

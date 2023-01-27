@@ -1,12 +1,3 @@
-// CÓDIGO SUSANA ABAIXO --------------------------------------
-// API BuzzQuizz
-const urlAPI = 'https://mock-api.driven.com.br/api/v4/buzzquizz';
-
-// todos os quizzes
-let allGetQuizzes = [];
-
-// lista sorteada
-let userListId = [0, 1, 2, 3];
 
 let tituloDoQuiz;
 
@@ -20,10 +11,26 @@ let titulosDosNiveis = [];
 let porcentagemNiveis = [];
 let urlImagemNiveis = [];
 let descricaoNiveis = [];
-
 let zero = [];
 
 const pattern = /^https:\/\//i;
+
+// CÓDIGO SUSANA ABAIXO --------------------------------------
+
+
+// API BuzzQuizz
+const urlAPI = 'https://mock-api.driven.com.br/api/v4/buzzquizz';
+
+// todos os quizzes
+let allGetQuizzes = [];
+
+// lista sorteada
+let userListId = [0, 1, 2, 3];
+
+let levels = []; 
+let answers = 0; 
+let correct = 0; 
+let questions = 0; 
 
 
 // GET TODOS OS QUIZZES
@@ -32,11 +39,14 @@ function getQuizzes() {
     const promisseGET = axios.get(`${urlAPI}/quizzes`);
     promisseGET.then(renderingQuizzes); // renderizando todos os quizzes
     promisseGET.catch(errorGetQuizzes);
-}
+};
+
+
 // msgm de erro ao buscar todos os quizzes
 function errorGetQuizzes() {
     console.log('ERROR SEARCHING QUIZZES!');
-}
+};
+
 
 // renderizando todos os quizzes
 function renderingQuizzes(response) {
@@ -72,11 +82,12 @@ function getUserQuizzes() {
         for (let id = 0; id < listId.length; id++) {
             let quiz = listId[id];
             userListId.push(quiz);
-        }
-    }
+        };
+    };
     // renderiza a lista de quizzes do usuário
     renderingUserQuizzes();
 };
+
 
 // renderiza quizzes do usuário
 function renderingUserQuizzes() {
@@ -95,9 +106,10 @@ function renderingUserQuizzes() {
                 listUserQuizzes.innerHTML +=
                     allYourQuizzes(quizzez.title, quizzez.image, quizzez.id);
             });
-        }
-    }
+        };
+    };
 };
+
 
 // retorna todos os seus quizzes 
 function allYourQuizzes(idQuizzes, imgUrl, title) {
@@ -110,21 +122,22 @@ function allYourQuizzes(idQuizzes, imgUrl, title) {
     `
 };
 
+
 // verifica se existe algum quizz do usuário, caso não html é mudado
 function checkExistsUserQuiz() {
-    const nonetQuizzesCreated = document.querySelector('.quiz-not-created');
+    const noneQuizzesCreated = document.querySelector('.quiz-not-created');
     const quizzesCreated = document.querySelector('.your-quizzes');
 
     if (localStorage.length === 0) {
-        nonetQuizzesCreated.classList.remove('hidden');
+        noneQuizzesCreated.classList.remove('hidden');
         quizzesCreated.classList.add('hidden');
-    }
+    };
     if (localStorage.length != 0) {
         renderingUserQuizzes()
-        nonetQuizzesCreated.classList.add('hidden');
+        noneQuizzesCreated.classList.add('hidden');
         quizzesCreated.classList.remove('hidden');
-    }
-}
+    };
+};
 checkExistsUserQuiz();
 
 
@@ -140,13 +153,15 @@ function saveLocalStorage(createdId) {
 
     userQuizzes.push(createdId);
     localStorage.setItem('userQuizzes', JSON.stringify(userQuizzes));
-}
+};
+
 
 // FUNÇÃO PARA A PROMISE.THEN DO QUIZZES CRIADO
 function quizzesCreatedSuccess(response) {
     saveLocalStorage(response.data.id);
     renderSuccessQuizzes(response.data);
-}
+};
+
 
 // VAI P/ TELA 2 DE PÁGINA DE QUIZZES
 function goQuizPage() { // Ao clicar sobre o quizz, esta tela deve sumir e dar lugar à Tela 2: Página de um quizz.
@@ -154,7 +169,8 @@ function goQuizPage() { // Ao clicar sobre o quizz, esta tela deve sumir e dar l
     const quizPage = document.querySelector('.containerQuizPage'); // add a página correta depois. 
     quizzesListScreen.classList.add('hidden');
     quizPage.classList.remove('hidden');
-}
+};
+
 
 // VAI P/ TELA 3 DE CRIAÇÃO DE QUIZZES
 function goQuizCreation() { // Ao clicar em "Criar Quizz" ou no "+" essa tela deve sumir, dando lugar à tela de Tela 3: Criação de Quizz.
@@ -162,19 +178,45 @@ function goQuizCreation() { // Ao clicar em "Criar Quizz" ou no "+" essa tela de
     const quizzesCreationScreen = document.querySelector('.containerQuizzesCreation'); // add a página correta depois. 
     quizzesListScreen.classList.add('hidden');
     quizzesCreationScreen.classList.remove('hidden');
-}
+};
+
+
+// BOTÃO REINICIAR QUIZZ
+function restartQuizz() {
+    // respostas zeradas pro estado inicial
+    levels = []; 
+    answers = 0; 
+    correct = 0; 
+    questions = 0; 
+
+    const getHtmlScreen2 = document.querySelector('pegarHtmlTela2'); // add html correto
+    getHtmlScreen2.scrollIntoView(); // tela 2 scrollada novamente para o topo
+    //add função correta e parâmetro correto
+    vaiPraTela2(idDoQuizzCorretoTela2); 
+};
+
+
+// BOTÃO VOLTA PARA HOME
+function comeBackHome() {
+    // respostas zeradas para o estado inicial
+    levels = []; 
+    answers = 0; 
+    correct = 0; 
+    questions = 0; 
+
+    const getHtmlScreen2 = document.querySelector('pegarHtmlTela2'); // add html correto
+    getHtmlScreen2.classList.add('hidden'); // esconde tela 2
+
+    const quizzesListScreen = document.querySelector('.container');
+    quizzesListScreen.classList.remove('hidden'); // tela 1 aparece novamente
+    quizzesListScreen.scrollIntoView(); // tela 1 scrollada para o topo
+};
 
 
 getQuizzes();
 renderingQuizzes();
 getUserQuizzes();
 renderingUserQuizzes();
-
-
-
-
-
-
 
 
 // CÓDIGO SUSANA ACIMA --------------------------------------
