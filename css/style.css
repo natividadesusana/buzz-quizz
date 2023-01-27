@@ -246,7 +246,7 @@ header p {
 
   margin: 0 auto;
 
-  margin-top: 146px;
+  /*margin-top: 146px;*/
 
   scroll-behavior:smooth;
   overflow: hidden;
@@ -310,6 +310,7 @@ header p {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
 
   margin-bottom: 40px;
+  padding: 20px;
 
   display: flex;
   flex-direction: column;
@@ -357,10 +358,13 @@ header p {
   font-size: 20px;
   line-height: 23px;
 
-  display: flex;
+}
+
+.paragrafo-resposta{
+
+  width: 340px;
   flex-wrap: wrap;
   word-wrap: break-word;
-
 }
 
 .muda-vermelho{
@@ -423,6 +427,8 @@ header p {
 .imagem-nivel{
   width: 370px;
   height: 270px;
+
+  margin-bottom: 20px;
 }
 
 .texto-nivel{
@@ -747,11 +753,7 @@ header p {
     font-size: 19px;
   }
 
-  .exibe-perguntas{
-    padding-left: 10px;
-    padding-right: 10px;
 
-  }
   .exibe-perguntas,
   .questions,
   .title-question,
@@ -759,9 +761,15 @@ header p {
     width: 100%;
   }
 
+ 
+
   .exibe-resposta img{
     width: 150px;
     height: 115px;
+  }
+
+  .paragrafo-resposta{
+    width: 150px;
   }
 
   .exibe-resposta h2{
@@ -792,6 +800,10 @@ header p {
     font-weight: 700;
     font-size: 19px;
     margin-bottom: 15px;
+  }
+
+  .corpo-nivel{
+    flex-direction: column;
   }
 
 }

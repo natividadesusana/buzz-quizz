@@ -342,7 +342,7 @@ function getPerguntas(objetoQuiz){
                     break;
 
                     case 1:
-                        html +=  `<p> ${respostas[k][w]} </p>
+                        html +=  `<div class="paragrafo-resposta"> <p> ${respostas[k][w]} </p> </div>
                         </div>`
                     break;
                 }
