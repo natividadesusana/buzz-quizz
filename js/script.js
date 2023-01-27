@@ -13,6 +13,12 @@ let urlImagemNiveis = [];
 let descricaoNiveis = [];
 let zero = [];
 
+let travaTela = false;
+
+let respostasEscolhidas = [];
+
+let armazenaCorretas = [];
+
 const pattern = /^https:\/\//i;
 
 // CÓDIGO SUSANA ABAIXO --------------------------------------
@@ -31,6 +37,10 @@ let levels = [];
 let answers = 0; 
 let correct = 0; 
 let questions = 0; 
+
+let quantidadePerguntasQuiz;
+let cont = 0;
+
 
 
 // GET TODOS OS QUIZZES
@@ -157,19 +167,167 @@ function saveLocalStorage(createdId) {
 
 
 // FUNÇÃO PARA A PROMISE.THEN DO QUIZZES CRIADO
+
+
+
 function quizzesCreatedSuccess(response) {
     saveLocalStorage(response.data.id);
     renderSuccessQuizzes(response.data);
 };
 
 
+function getNivel (){
+    console.log("to no nivel");
+    console.log(respostasEscolhidas);
+}
+
+function selecionaResposta(getEscolhida){
+
+    let answersChoose;
+    let nome;
+
+    cont++;
+    
+    if(travaTela === false){
+         answersChoose = getEscolhida;
+         respostasEscolhidas.push(answersChoose);
+         travaTela = true;
+    }
+    
+    if(getEscolhida !== answersChoose){
+        return;
+    }
+
+    let father =  answersChoose.parentNode.parentNode.nextElementSibling;
+    console.log(father);
+
+    for ( let i = 0; i < answersChoose.parentNode.children.length; i++){
+
+        nome = answersChoose.parentNode.children[i].querySelector("p").innerText;
+
+        
+        if(answersChoose.parentNode.children[i] !== answersChoose){
+
+            answersChoose.parentNode.children[i].querySelector("img").classList.add("esbranquiçado");
+            answersChoose.parentNode.children[i].removeAttribute("onclick");
+            
+            if(nome !== armazenaCorretas[cont-1]){
+                answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-vermelho");
+            } else{
+                answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-verde");
+            }
+        }else{
+
+            if(nome !== armazenaCorretas[cont-1]){
+                answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-vermelho");
+            } else{
+                answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-verde");
+            }
+            answersChoose.parentNode.children[i].removeAttribute("onclick");
+        }
+    }
+
+
+    if(cont != 3){
+        setTimeout (() => { answersChoose.parentNode.parentNode.nextElementSibling.scrollIntoView()
+            travaTela = false;
+        }, 2000);
+    } else{
+            getNivel();
+    }
+}
+
+
+function getPerguntas(objetoQuiz){
+
+    const local = document.querySelector(".exibe-perguntas");
+    let html = "";
+    let respostas = [];
+
+    console.log(objetoQuiz);
+
+    quantidadePerguntasQuiz = objetoQuiz.questions.length;
+
+    for(let i = 0; i<objetoQuiz.questions.length; i++){
+
+        html += `<div class="questions"> 
+                    <div class ="title-question" style = "background-color:${objetoQuiz.questions[i].color}"> 
+                        <h1> ${objetoQuiz.questions[i].title} </h1>
+                    </div>
+                    <div class="organiza-resposta">`
+               
+        
+        for(let j = 0; j < objetoQuiz.questions[i].answers.length; j++){
+            
+            respostas.push([objetoQuiz.questions[i].answers[j].image, objetoQuiz.questions[i].answers[j].text])
+            if (objetoQuiz.questions[i].answers[j].isCorrectAnswer === true){
+                armazenaCorretas.push(objetoQuiz.questions[i].answers[j].text);
+            }
+        }
+
+        respostas.sort( () => { return Math.random() - 0.5;});
+
+        console.log(respostas);
+
+        for(let k = 0; k < respostas.length; k++){
+
+            html+= `<div onclick="selecionaResposta(this)" class = "exibe-resposta">`
+            for(let w = 0; w < respostas[k].length; w ++){
+
+                switch (w){
+
+                    case 0:
+                        html += `<img src="${respostas[k][w]}" alt="">`
+                    break;
+
+                    case 1:
+                        html +=  `<p> ${respostas[k][w]} </p>
+                        </div>`
+                    break;
+                }
+            }
+        }
+
+        html +=  `</div> 
+                    </div>`;
+        
+        respostas = [];
+
+    }
+
+    local.innerHTML = html;
+    
+}
+
 // VAI P/ TELA 2 DE PÁGINA DE QUIZZES
-function goQuizPage() { // Ao clicar sobre o quizz, esta tela deve sumir e dar lugar à Tela 2: Página de um quizz.
-    const quizzesListScreen = document.querySelector('.container');
-    const quizPage = document.querySelector('.containerQuizPage'); // add a página correta depois. 
-    quizzesListScreen.classList.add('hidden');
-    quizPage.classList.remove('hidden');
-};
+
+function goQuizPage(quizEscolhido) { // Ao clicar sobre o quizz, esta tela deve sumir e dar lugar à Tela 2: Página de um quizz.
+    
+    mudaPagina("main-container", "tela_2");
+    
+    console.log(quizEscolhido);
+    console.log(allGetQuizzes);
+    
+    let objetoQuiz = [];
+    
+
+    for(let i = 0; i < allGetQuizzes.length; i++){
+        if(allGetQuizzes[i].id === quizEscolhido){
+            objetoQuiz = allGetQuizzes[i];
+        }
+    }
+
+    console.log(objetoQuiz);
+    
+    const imgQuiz = document.querySelector(".banner");
+    const tituloObjeto = document.querySelector(".texto-banner");
+    
+    imgQuiz.src = objetoQuiz.image;
+    tituloObjeto.innerHTML = objetoQuiz.title;
+
+    getPerguntas(objetoQuiz);
+}
+
 
 
 // VAI P/ TELA 3 DE CRIAÇÃO DE QUIZZES
@@ -211,19 +369,6 @@ function comeBackHome() {
     quizzesListScreen.classList.remove('hidden'); // tela 1 aparece novamente
     quizzesListScreen.scrollIntoView(); // tela 1 scrollada para o topo
 };
-
-
-getQuizzes();
-renderingQuizzes();
-getUserQuizzes();
-renderingUserQuizzes();
-
-
-// CÓDIGO SUSANA ACIMA --------------------------------------
-
-
-
-// CÓDIGO TAIS ABAIXO --------------------------------------
 
 function erroValidacaoInfo(i) {
 
@@ -629,3 +774,8 @@ function verificaPerguntas() {
     }
 }
 // CÓDIGO TAIS ABAIXO --------------------------------------
+
+getQuizzes();
+renderingQuizzes();
+getUserQuizzes();
+renderingUserQuizzes();

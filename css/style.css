@@ -229,12 +229,164 @@ header p {
 
 /* CÓDIGO SUSANA ACIMA -------------------------------------- */
 
+
+
 /* CÓDIGO TAIS ABAIXO -------------------------------------- */
 
-/* *{
-    box-sizing: border-box;
+/* ====================================== tela 2 =======================================*/
+
+.tela_2{
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
- */
+
+
+.topo-quiz{
+  width:100%;
+  height:230px;
+
+  margin-top: 70px;
+  background-color: black;
+  position: relative;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: center;
+  align-items: center;
+
+}
+
+.topo-quiz img{
+  width:100%;
+  height:230px;
+
+  opacity: 0.3;
+}
+
+.titulo-banner{
+
+  position: absolute;
+  
+  width: 100%;
+
+  
+}
+
+
+.topo-quiz h1{
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 39px;
+  line-height: 46px;
+
+  color:#FFFFFF;
+
+  text-align: center;
+}
+
+.exibe-perguntas{
+
+  display: flex;
+  flex-direction: column;
+  
+
+  width: 800px;
+  height: 100%;
+
+  margin: 0 auto;
+
+  margin-top: 50px;
+  
+}
+
+.questions{
+
+  width: 800px;
+  height: 100%;
+
+
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+
+  margin-bottom: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-question{
+
+  width: 740px;
+  height: 150px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 30px;
+
+}
+
+.title-question h1{
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 23px;
+  line-height: 27px;
+  color: #FFFFFF;
+}
+
+.exibe-resposta img{
+
+  width: 340px;
+  height: 180px;
+
+  margin-bottom:7px ;
+
+}
+
+.exibe-resposta p{
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+
+}
+
+.muda-vermelho{
+  color: #FF4B4B;
+}
+
+.muda-verde{
+  color: #009C22;
+}
+
+.esbranquiçado{
+  opacity: 0.3;
+}
+
+.organiza-resposta{
+  display: flex;
+  flex-wrap: wrap;
+
+
+  /*padding: 40px;*/
+}
+
+.exibe-resposta{
+
+  padding: 30px;
+  border-radius: 0px;
+}
+
 
 /* =========================================== tela 3.1 ================================*/
 .tela_3_1,
@@ -243,20 +395,19 @@ header p {
   flex-direction: column;
   align-items: center;
 
-  margin: 90px auto;
+    font-family: 'Roboto';
 
-  font-family: 'Roboto';
+    padding: 20px;
 }
 
 .tela_3_1 h1,
 .tela_3_3 h1 {
 
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  color: #000000;
-
-  margin-bottom: 30px;
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size:20px;
+    color: #000000;
 
 
 }
@@ -280,9 +431,12 @@ header p {
   width: 565px;
   height: 50px;
 
-  font-style: italic;
-  font-weight: 400;
-  font-size: 19px;
+  
+
+    font-family: "Roboto", sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 19px;
 
   color: #BABABA;
   background: #FFFFFF;
@@ -310,9 +464,10 @@ header p {
   border-radius: 15px;
   cursor: pointer;
 
-  font-style: normal;
-  font-weight: 400;
-  font-size: 21px;
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
 
   color: #FFF5F4;
 
@@ -329,11 +484,13 @@ header p {
 /*============================================  estilo tela 3.3  =============================== */
 
 
-.niveis-quiz h2 {
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  color: #000000;
+.niveis-quiz h2{
+
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    color: #000000;
 
   margin-bottom: 12px;
 }
@@ -438,7 +595,8 @@ header p {
   display: none;
 }
 
-/* mobile layout */
+
+/* ============================== mobile layout ============================== */
 
 @media (max-width: 1100px) {
   header {
@@ -484,6 +642,51 @@ header p {
 
   .niveis-quiz textarea {
     height: 180px;
+  }
+
+  .topo-quiz,
+  .topo-quiz img{
+    height: 150px;
+  }
+
+  .topo-quiz h1{
+    font-size: 19px;
+  }
+
+  .exibe-perguntas{
+    padding-left: 10px;
+    padding-right: 10px;
+
+  }
+  .exibe-perguntas,
+  .questions,
+  .title-question{
+    width: 100%;
+  }
+
+  .exibe-resposta img{
+    width: 150px;
+    height: 115px;
+  }
+
+  .exibe-resposta h2{
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    
+    color: #000000;
+
+  }
+
+  .exibe-resposta{
+    padding: 10px;
+  }
+
+  .title-question{
+    margin-bottom: 15px;
   }
 
 }
