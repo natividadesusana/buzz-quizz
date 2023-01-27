@@ -211,7 +211,7 @@ function getNivel (acertos){
 
                 <div class="corpo-nivel">
                     <img class = "imagem-nivel" src="${imgNivel}" alt="">
-                    <p class="texto-nivel"> ${textoNivel} </p>
+                    <div class="paragrafo-nivel"> <p class="texto-nivel"> ${textoNivel} </p> </div>
                 </div>
 
                 <div class = "botoes-nivel">
@@ -398,7 +398,7 @@ function goQuizCreation() { // Ao clicar em "Criar Quizz" ou no "+" essa tela de
 
 
 // BOTÃO REINICIAR QUIZZ
-function restartQuizz() {
+/*function restartQuizz() {
     // respostas zeradas pro estado inicial
     levels = []; 
     answers = 0; 
@@ -406,14 +406,15 @@ function restartQuizz() {
     questions = 0; 
 
     const getHtmlScreen2 = document.querySelector('pegarHtmlTela2'); // add html correto
+
     getHtmlScreen2.scrollIntoView(); // tela 2 scrollada novamente para o topo
     //add função correta e parâmetro correto
-    vaiPraTela2(idDoQuizzCorretoTela2); 
-};
+    
+};*/
 
 
 // BOTÃO VOLTA PARA HOME
-function comeBackHome() {
+/*function comeBackHome() {
     // respostas zeradas para o estado inicial
     levels = []; 
     answers = 0; 
@@ -426,7 +427,7 @@ function comeBackHome() {
     const quizzesListScreen = document.querySelector('.container');
     quizzesListScreen.classList.remove('hidden'); // tela 1 aparece novamente
     quizzesListScreen.scrollIntoView(); // tela 1 scrollada para o topo
-};
+};*/
 
 function erroValidacaoInfo(i) {
 
