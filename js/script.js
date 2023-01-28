@@ -869,6 +869,8 @@ function comeBackHome(){
     mudaPagina("tela_2", "main-container");
 }
 
+/*linha pra teste*/
+
 getQuizzes();
 renderingQuizzes();
 getUserQuizzes();
