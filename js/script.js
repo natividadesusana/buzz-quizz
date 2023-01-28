@@ -13,6 +13,12 @@ let urlImagemNiveis = [];
 let descricaoNiveis = [];
 let zero = [];
 
+let travaTela = false;
+
+let respostasEscolhidas = [];
+
+let armazenaCorretas = [];
+
 const pattern = /^https:\/\//i;
 
 // CÓDIGO SUSANA ABAIXO --------------------------------------
@@ -31,6 +37,13 @@ let levels = [];
 let answers = 0; 
 let correct = 0; 
 let questions = 0; 
+
+let quantidadePerguntasQuiz;
+let cont = 0;
+
+let objetoQuiz = [];
+let acertos = 0;
+
 
 
 // GET TODOS OS QUIZZES
@@ -157,19 +170,222 @@ function saveLocalStorage(createdId) {
 
 
 // FUNÇÃO PARA A PROMISE.THEN DO QUIZZES CRIADO
+
+
+
 function quizzesCreatedSuccess(response) {
     saveLocalStorage(response.data.id);
     renderSuccessQuizzes(response.data);
 };
 
 
+
+function getNivel (acertos){
+    
+    const local = document.querySelector(".tela_2");
+    const niveis = objetoQuiz.levels;
+    let html = "";
+
+    let calc = Math.floor((100 * acertos)/quantidadePerguntasQuiz);
+
+    let tituloNivel;
+    let imgNivel;
+    let textoNivel;
+
+    console.log(niveis);
+    console.log(calc);
+
+    for (let i = 0; i< niveis.length; i++){
+        if(calc >= niveis[i].minValue)
+        {
+             tituloNivel = niveis[i].title;
+             imgNivel = niveis[i].image;
+             textoNivel = niveis[i].text;
+        }
+    }
+
+    html += `<div class = "exibe-nivel">
+                <div class = "titulo-nivel">
+                    <h1> ${tituloNivel} </h1>
+                </div>
+
+                <div class="corpo-nivel">
+                    <img class = "imagem-nivel" src="${imgNivel}" alt="">
+                    <div class="paragrafo-nivel"> <p class="texto-nivel"> ${textoNivel} </p> </div>
+                </div>
+
+                <div class = "botoes-nivel">
+                    <button onclick="restartQuizz()" class="botao-reinicio"> Reiniciar Quiz </button>
+                    <button onclick="comeBackHome()" class="voltarHome"> Voltar pra Home </button>
+                </div>
+
+            </div>`
+
+    local.innerHTML += html;
+    
+    console.log(local);
+
+    console.log(tituloNivel);
+    console.log(imgNivel);
+    console.log(textoNivel);
+
+}
+
+
+function selecionaResposta(getEscolhida){
+
+    let answersChoose;
+    let nome;
+    let aux = 0;
+
+    cont++;
+    
+    if(travaTela === false){
+         answersChoose = getEscolhida;
+         respostasEscolhidas.push(answersChoose);
+         travaTela = true;
+    }
+    
+    if(getEscolhida !== answersChoose){
+        return;
+    }
+
+    let father =  answersChoose.parentNode.parentNode.nextElementSibling;
+    console.log(father);
+
+    for ( let i = 0; i < answersChoose.parentNode.children.length; i++){
+
+        nome = answersChoose.parentNode.children[i].querySelector("p").innerText;
+
+        
+        if(answersChoose.parentNode.children[i] !== answersChoose){
+
+            answersChoose.parentNode.children[i].querySelector("img").classList.add("esbranquicado");
+            answersChoose.parentNode.children[i].removeAttribute("onclick");
+            
+            if(nome !== armazenaCorretas[cont-1] || aux === 1 ){
+                answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-vermelho");
+            } else{
+                aux = 1;
+                answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-verde");
+            }
+        }else{
+
+            if(nome !== armazenaCorretas[cont-1] || aux === 1 ){
+                answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-vermelho");
+            } else {
+                
+                aux = 1;
+                acertos++;
+                answersChoose.parentNode.children[i].querySelector("p").classList.add("muda-verde");
+            }
+            answersChoose.parentNode.children[i].removeAttribute("onclick");
+        }
+
+    }
+
+    if(cont != 3){
+        setTimeout (() => { answersChoose.parentNode.parentNode.nextElementSibling.scrollIntoView()
+            travaTela = false;
+        }, 2000);
+    } else{
+
+        setTimeout (() => { getNivel(acertos);
+            const local = document.querySelector(".exibe-nivel");
+            local.scrollIntoView();
+        }, 2000);
+            
+    }
+}
+
+
+function getPerguntas(objetoQuiz){
+
+    const local = document.querySelector(".exibe-perguntas");
+    let html = "";
+    let respostas = [];
+
+    console.log(objetoQuiz);
+
+    quantidadePerguntasQuiz = objetoQuiz.questions.length;
+
+    for(let i = 0; i<objetoQuiz.questions.length; i++){
+
+        html += `<div class="questions"> 
+                    <div class ="title-question" style = "background-color:${objetoQuiz.questions[i].color}"> 
+                        <h1> ${objetoQuiz.questions[i].title} </h1>
+                    </div>
+                    <div class="organiza-resposta">`
+               
+        
+        for(let j = 0; j < objetoQuiz.questions[i].answers.length; j++){
+            
+            respostas.push([objetoQuiz.questions[i].answers[j].image, objetoQuiz.questions[i].answers[j].text])
+            if (objetoQuiz.questions[i].answers[j].isCorrectAnswer === true){
+                armazenaCorretas.push(objetoQuiz.questions[i].answers[j].text);
+            }
+        }
+
+        respostas.sort( () => { return Math.random() - 0.5;});
+
+        console.log(respostas);
+
+        for(let k = 0; k < respostas.length; k++){
+
+            html+= `<div onclick="selecionaResposta(this)" class = "exibe-resposta">`
+            for(let w = 0; w < respostas[k].length; w ++){
+
+                switch (w){
+
+                    case 0:
+                        html += `<img src="${respostas[k][w]}" alt="">`
+                    break;
+
+                    case 1:
+                        html +=  `<div class="paragrafo-resposta"> <p> ${respostas[k][w]} </p> </div>
+                        </div>`
+                    break;
+                }
+            }
+        }
+
+        html +=  `</div> 
+                    </div>`;
+        
+        respostas = [];
+
+    }
+
+    local.innerHTML = html;
+    
+}
+
 // VAI P/ TELA 2 DE PÁGINA DE QUIZZES
-function goQuizPage() { // Ao clicar sobre o quizz, esta tela deve sumir e dar lugar à Tela 2: Página de um quizz.
-    const quizzesListScreen = document.querySelector('.container');
-    const quizPage = document.querySelector('.containerQuizPage'); // add a página correta depois. 
-    quizzesListScreen.classList.add('hidden');
-    quizPage.classList.remove('hidden');
-};
+
+function goQuizPage(quizEscolhido) { // Ao clicar sobre o quizz, esta tela deve sumir e dar lugar à Tela 2: Página de um quizz.
+    
+    mudaPagina("main-container", "tela_2");
+    
+    console.log(quizEscolhido);
+    console.log(allGetQuizzes);
+    
+    for(let i = 0; i < allGetQuizzes.length; i++){
+        if(allGetQuizzes[i].id === quizEscolhido){
+            objetoQuiz = allGetQuizzes[i];
+        }
+    }
+
+    console.log(objetoQuiz);
+    
+    const imgQuiz = document.querySelector(".banner");
+    const tituloObjeto = document.querySelector(".texto-banner");
+    
+    imgQuiz.src = objetoQuiz.image;
+    tituloObjeto.innerHTML = objetoQuiz.title;
+
+    getPerguntas(objetoQuiz);
+}
+
 
 
 // VAI P/ TELA 3 DE CRIAÇÃO DE QUIZZES
@@ -182,7 +398,7 @@ function goQuizCreation() { // Ao clicar em "Criar Quizz" ou no "+" essa tela de
 
 
 // BOTÃO REINICIAR QUIZZ
-function restartQuizz() {
+/*function restartQuizz() {
     // respostas zeradas pro estado inicial
     levels = []; 
     answers = 0; 
@@ -190,14 +406,15 @@ function restartQuizz() {
     questions = 0; 
 
     const getHtmlScreen2 = document.querySelector('pegarHtmlTela2'); // add html correto
+
     getHtmlScreen2.scrollIntoView(); // tela 2 scrollada novamente para o topo
     //add função correta e parâmetro correto
-    vaiPraTela2(idDoQuizzCorretoTela2); 
-};
+    
+};*/
 
 
 // BOTÃO VOLTA PARA HOME
-function comeBackHome() {
+/*function comeBackHome() {
     // respostas zeradas para o estado inicial
     levels = []; 
     answers = 0; 
@@ -210,20 +427,7 @@ function comeBackHome() {
     const quizzesListScreen = document.querySelector('.container');
     quizzesListScreen.classList.remove('hidden'); // tela 1 aparece novamente
     quizzesListScreen.scrollIntoView(); // tela 1 scrollada para o topo
-};
-
-
-getQuizzes();
-renderingQuizzes();
-getUserQuizzes();
-renderingUserQuizzes();
-
-
-// CÓDIGO SUSANA ACIMA --------------------------------------
-
-
-
-// CÓDIGO TAIS ABAIXO --------------------------------------
+};*/
 
 function erroValidacaoInfo(i) {
 
@@ -270,6 +474,8 @@ function verficaSeTudoFoiPreeenchido(classe) {
 }
 
 function mudaPagina(local, local2) {
+
+    window.scrollTo(0,0);
 
     const tela1 = document.querySelector(`.${local}`);
     const tela2 = document.querySelector(`.${local2}`);
@@ -452,6 +658,15 @@ function pegaElementosNivelQuiz() {
 
 }
 
+function editarNivel(elemento){
+
+    const editando = elemento.nextElementSibling;
+
+    if (editando.classList.contains("escondido") === true) {
+        editando.classList.remove("escondido");
+    } 
+}
+
 function niveisQuiz() {
 
     const div = document.querySelector(".niveis-quiz");
@@ -462,11 +677,11 @@ function niveisQuiz() {
     for (let i = 1; i <= quantidadeNivel; i++) {
         html += `<div class="niveis"> 
 
-                    <div class="titulo">
+                    <div onclick="editarNivel(this)" class="titulo">
                         <h2> Nível ${i} </h2> <ion-icon name="create-outline"></ion-icon> 
                     </div>
 
-                    <div class="barra-animada">
+                    <div class="barra-animada escondido">
                         <input type="text" placeholder="Título do nível">
                         <p class="escondido"> Preencha os dados corretamente </p>
                         <input type="text" placeholder="% de acerto mínima">
@@ -629,3 +844,34 @@ function verificaPerguntas() {
     }
 }
 // CÓDIGO TAIS ABAIXO --------------------------------------
+
+function restartQuizz() {
+    // respostas zeradas pro estado inicial
+
+
+    console.log(" entrei aqui");
+    
+    armazenaCorretas = [];
+    acertos = 0;
+    cont = 0;
+    travaTela = false;
+
+    const getHtmlScreen2 = document.querySelector('tela_2'); // add html correto
+    const getHtmlNivel = document.querySelector(".exibe-nivel");
+     // tela 2 scrollada novamente para o topo
+    //add função correta e parâmetro correto
+    getPerguntas(objetoQuiz);
+    window.scrollTo(1000,0);
+    getHtmlNivel.innerHTML = "";
+}
+
+function comeBackHome(){
+    mudaPagina("tela_2", "main-container");
+}
+
+/*linha pra teste*/
+
+getQuizzes();
+renderingQuizzes();
+getUserQuizzes();
+renderingUserQuizzes();
