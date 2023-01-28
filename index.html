@@ -89,12 +89,14 @@
 
     <aside class="tela_2 escondido">
         <div class="topo-quiz ">
-            <img class = "banner" src="" alt="">
-            <div class="titulo-banner"> <h1 class="texto-banner">  </h1> </div>
+            <img class="banner" src="" alt="">
+            <div class="titulo-banner">
+                <h1 class="texto-banner"> </h1>
+            </div>
         </div>
 
         <div class="exibe-perguntas">
-            
+
         </div>
     </aside>
 
@@ -102,9 +104,9 @@
         <h1> Comece pelo começo </h1>
 
         <div class="info-basica-quiz">
-            <input type="text" placeholder="Título do seu quizz">
+            <input class="titulo-quiz" type="text" placeholder="Título do seu quizz">
             <p class="escondido"> Preencha os dados corretamente </p>
-            <input type="text" placeholder="URL da imagem do seu quizz">
+            <input class="imagem-quiz" type="text" placeholder="URL da imagem do seu quizz">
             <p class="escondido"> Preencha os dados corretamente </p>
             <input type="text" placeholder="Quantidade de perguntas do quizz">
             <p class="escondido"> Preencha os dados corretamente </p>
@@ -133,7 +135,16 @@
 
         <button onclick="pegaElementosNivelQuiz()"> Finalizar quiz </button>
     </aside>
+    <aside class="tela_3_4 escondido">
+        <h1> Seu quizz está pronto! </h1>
 
+        <div class="quiz-criado">
+
+        </div>
+
+        <button> Acessar Quizz </button>
+        <span onclick="voltarHome()"> Voltar pra home </span>
+    </aside>
 
 
     <!-- <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script> -->

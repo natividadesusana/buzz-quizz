@@ -235,11 +235,11 @@ header p {
 
 /* ====================================== tela 2 =======================================*/
 
-.tela_2{
+.tela_2 {
 
   display: flex;
   flex-direction: column;
-  
+
 
   width: 800px;
   height: 100%;
@@ -248,16 +248,16 @@ header p {
 
   /*margin-top: 146px;*/
 
-  scroll-behavior:smooth;
+  scroll-behavior: smooth;
   overflow: hidden;
 
-  
+
 }
 
 
-.topo-quiz{
-  width:100%;
-  height:230px;
+.topo-quiz {
+  width: 100%;
+  height: 230px;
 
   margin-top: 70px;
   background-color: black;
@@ -271,24 +271,24 @@ header p {
 
 }
 
-.topo-quiz img{
-  width:100%;
-  height:230px;
+.topo-quiz img {
+  width: 100%;
+  height: 230px;
 
   opacity: 0.3;
 }
 
-.titulo-banner{
+.titulo-banner {
 
   position: absolute;
-  
+
   width: 100%;
 
-  
+
 }
 
 
-.topo-quiz h1{
+.topo-quiz h1 {
 
   font-family: 'Roboto';
   font-style: normal;
@@ -296,12 +296,12 @@ header p {
   font-size: 39px;
   line-height: 46px;
 
-  color:#FFFFFF;
+  color: #FFFFFF;
 
   text-align: center;
 }
 
-.questions{
+.questions {
 
   width: 800px;
   height: 100%;
@@ -317,7 +317,7 @@ header p {
   align-items: center;
 }
 
-.title-question{
+.title-question {
 
   width: 740px;
   height: 150px;
@@ -331,7 +331,7 @@ header p {
 
 }
 
-.title-question h1{
+.title-question h1 {
 
   font-family: 'Roboto';
   font-style: normal;
@@ -341,16 +341,16 @@ header p {
   color: #FFFFFF;
 }
 
-.exibe-resposta img{
+.exibe-resposta img {
 
   width: 340px;
   height: 180px;
 
-  margin-bottom:7px ;
+  margin-bottom: 7px;
 
 }
 
-.exibe-resposta p{
+.exibe-resposta p {
 
   font-family: 'Roboto';
   font-style: normal;
@@ -361,7 +361,7 @@ header p {
 }
 
 .paragrafo-resposta,
-.paragrafo-nivel{
+.paragrafo-nivel {
 
   width: 340px;
   flex-wrap: wrap;
@@ -369,19 +369,19 @@ header p {
 }
 
 
-.muda-vermelho{
+.muda-vermelho {
   color: #FF4B4B;
 }
 
-.muda-verde{
+.muda-verde {
   color: #009C22;
 }
 
-.esbranquicado{
+.esbranquicado {
   opacity: 0.3;
 }
 
-.organiza-resposta{
+.organiza-resposta {
   display: flex;
   flex-wrap: wrap;
 
@@ -389,16 +389,17 @@ header p {
   /*padding: 40px;*/
 }
 
-.exibe-resposta{
+.exibe-resposta {
 
   padding: 30px;
   border-radius: 0px;
 }
-.exibe-nivel{
+
+.exibe-nivel {
   padding: 20px;
 }
 
-.titulo-nivel{
+.titulo-nivel {
   width: 100%;
   height: 100px;
   background-color: #EC362D;
@@ -417,7 +418,7 @@ header p {
   color: #FFFFFF;
 }
 
-.corpo-nivel{
+.corpo-nivel {
   width: 100%;
   height: 450px;
 
@@ -426,28 +427,28 @@ header p {
   margin-top: 20px;
 }
 
-.imagem-nivel{
+.imagem-nivel {
   width: 370px;
   height: 270px;
 
   margin-bottom: 20px;
 }
 
-.texto-nivel{
+.texto-nivel {
 
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
   font-size: 19px;
   line-height: 25px;
-  
+
   color: #484848;
 
   margin-left: 20px;
-  
+
 }
 
-.botoes-nivel{
+.botoes-nivel {
   width: 100%;
   height: 100px;
 
@@ -458,8 +459,8 @@ header p {
 
 }
 
-.botao-reinicio{
-  
+.botao-reinicio {
+
   width: 261px;
   height: 55px;
 
@@ -467,28 +468,28 @@ header p {
   background-color: #EC362D;
   border-radius: 15px;
 
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 21px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 21px;
 
   color: #FFF5F4;
 }
 
-.voltarHome{
+.voltarHome {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 21px;
   line-height: 25px;
-  
+
   color: #818181;
 
   background-color: #FFFFFF;
 
   border: none;
 
-  margin-top:20px;
+  margin-top: 20px;
 }
 
 /* =========================================== tela 3.1 ================================*/
@@ -498,20 +499,20 @@ header p {
   flex-direction: column;
   align-items: center;
 
-    font-family: 'Roboto';
+  font-family: 'Roboto';
 
-    margin-top: 146px;
-    padding: 20px;
+  margin-top: 146px;
+  padding: 20px;
 }
 
 .tela_3_1 h1,
 .tela_3_3 h1 {
 
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    font-size:20px;
-    color: #000000;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000000;
 
 
 }
@@ -535,12 +536,12 @@ header p {
   width: 565px;
   height: 50px;
 
-  
 
-    font-family: "Roboto", sans-serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 19px;
+
+  font-family: "Roboto", sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 19px;
 
   color: #BABABA;
   background: #FFFFFF;
@@ -555,7 +556,7 @@ header p {
 }
 
 .tela_3_1 button,
-.tela_3_3 button{
+.tela_3_3 button {
 
   width: 370px;
   height: 55px;
@@ -568,10 +569,10 @@ header p {
   border-radius: 15px;
   cursor: pointer;
 
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 21px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 21px;
 
   color: #FFF5F4;
 
@@ -588,13 +589,13 @@ header p {
 /*============================================  estilo tela 3.3  =============================== */
 
 
-.niveis-quiz h2{
+.niveis-quiz h2 {
 
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    color: #000000;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000000;
 
   margin-bottom: 12px;
 }
@@ -631,9 +632,8 @@ header p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
+  margin: 90px auto;
   font-family: 'Roboto';
-  padding: 20px;
 }
 
 .pergunta {
@@ -693,6 +693,107 @@ header p {
   color: red;
 }
 
+/* ===============================================FIM DO CSS DA TELA 3_2=========================================================*/
+
+/* ===============================================INICIO DO CSS DA TELA 3_4=========================================================*/
+
+.tela_3_4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 90px auto;
+  font-family: 'Roboto';
+}
+
+.tela_3_4 h1 {
+  font-style: bold;
+  font-weight: 700;
+  font-size: 20px;
+  color: #000000;
+  font-family: 'Roboto';
+}
+
+.tela_3_4 button {
+  width: 220px;
+  height: 45px;
+  margin-top: 35px;
+  border: none;
+  background-color: #EC362D;
+  border-radius: 15px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 21px;
+  color: #FFF5F4;
+}
+
+.tela_3_4 span {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #818181;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.quiz-criado {
+  position: relative;
+  width: 500px;
+  height: 266px;
+  margin-top: 45px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.62%, rgba(0, 0, 0, 0.8) 100%);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+.imagem-quiz-criado {
+  width: 500px;
+  height: 266px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.quiz-criado figcaption {
+  width: 450px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 22px;
+  color: #ffffff;
+
+  position: absolute;
+  bottom: 14px;
+  left: 20px;
+  height: 50px;
+  z-index: 1;
+
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  cursor: pointer;
+}
+
+.quiz-criado .background {
+  width: 100%;
+  height: 60%;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  background-image: linear-gradient(to bottom,
+      rgb(0, 0, 0, 0),
+      rgb(0, 0, 0, 1));
+}
+
+/* ===============================================FIM DO CSS DA TELA 3_4=========================================================*/
+
 .escondido {
   display: none;
 }
@@ -747,11 +848,11 @@ header p {
   }
 
   .topo-quiz,
-  .topo-quiz img{
+  .topo-quiz img {
     height: 150px;
   }
 
-  .topo-quiz h1{
+  .topo-quiz h1 {
     font-size: 19px;
   }
 
@@ -759,44 +860,44 @@ header p {
   .exibe-perguntas,
   .questions,
   .title-question,
-  .tela_2{
+  .tela_2 {
     width: 100%;
   }
 
- 
 
-  .exibe-resposta img{
+
+  .exibe-resposta img {
     width: 150px;
     height: 115px;
   }
 
-  .paragrafo-resposta{
+  .paragrafo-resposta {
     width: 150px;
   }
 
-  .exibe-resposta h2{
+  .exibe-resposta h2 {
 
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 700;
     font-size: 13px;
     line-height: 15px;
-    
+
     color: #000000;
 
   }
 
-  .exibe-resposta p{
+  .exibe-resposta p {
     font-size: 13px;
-    
+
 
   }
 
-  .exibe-resposta{
+  .exibe-resposta {
     padding: 10px;
   }
 
-  .title-question{
+  .title-question {
 
     height: 89px;
     font-weight: 700;
@@ -804,7 +905,7 @@ header p {
     margin-bottom: 15px;
   }
 
-  .corpo-nivel{
+  .corpo-nivel {
     flex-direction: column;
   }
 
