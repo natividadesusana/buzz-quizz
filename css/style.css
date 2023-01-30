@@ -142,7 +142,7 @@ header p {
 
 .quizzes {
   width: 100%;
-
+  
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -195,7 +195,7 @@ header p {
 .your-quizzes {
   width: 1051px;
   margin-top: 146px;
-
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -226,6 +226,28 @@ header p {
   display: none;
 }
 
+.optionsQuizzes{
+  background-color:#EC362D;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+  padding: 8px 4px;
+
+  position: absolute;
+  right: 0;
+  top: 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.optionsQuizzes ion-icon{
+  color: #FFFFFF;
+  margin: 4px;
+
+  display: block;
+  cursor: pointer;
+}
 
 /* CÓDIGO SUSANA ACIMA -------------------------------------- */
 
@@ -421,7 +443,7 @@ header p {
 .corpo-nivel {
   width: 100%;
   height: 450px;
-
+  
   display: flex;
 
   margin-top: 20px;
@@ -513,19 +535,29 @@ header p {
   font-weight: 700;
   font-size: 20px;
   color: #000000;
+  margin-top: -40px;
+  margin-bottom: 20px;
 
+}
 
+.barra-animada p {
+  margin-top: -10px;
+  margin-bottom: 10px;
 }
 
 .info-basica-quiz {
 
   width: 600px;
-  height: 270px;
+  height: 100%;
   background-color: #FFFFFF;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   padding-left: 20px;
   padding-top: 20px;
+}
 
+.info-basica-quiz p {
+  margin-top: -8px;
+  margin-bottom: 10px;
 
 }
 
@@ -535,7 +567,7 @@ header p {
 
   width: 565px;
   height: 50px;
-
+  
 
 
   font-family: "Roboto", sans-serif;
@@ -562,6 +594,7 @@ header p {
   height: 55px;
 
   margin-top: 85px;
+  margin-bottom: 400px;
 
 
   border: none;
@@ -603,6 +636,7 @@ header p {
 .niveis {
 
   width: 600px;
+  height: 100%;
 
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
 
@@ -647,6 +681,11 @@ header p {
 
 .input-duplo {
   margin-top: 20px
+}
+
+.input-duplo p {
+  margin-top: -10px;
+  margin-bottom: 10px;
 }
 
 .tela_3_2 h1 {
@@ -711,6 +750,7 @@ header p {
   font-size: 20px;
   color: #000000;
   font-family: 'Roboto';
+  margin-top: 40px;
 }
 
 .tela_3_4 button {
@@ -864,7 +904,6 @@ header p {
   .tela_2 {
     width: 100%;
   }
-
 
 
   .exibe-resposta img {
