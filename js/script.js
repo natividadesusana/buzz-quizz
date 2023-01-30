@@ -87,8 +87,8 @@ function renderingQuizzes(response) {
        
 
         let templates = `
-            <div class="box-quiz" onclick="goQuizPage(${allGetQuizzes[i].id},'main-container','tela_2')">
-                <img src="${allGetQuizzes[i].image}" />
+            <div class="box-quiz">
+                <img onclick="goQuizPage(${allGetQuizzes[i].id},'main-container','tela_2')" src="${allGetQuizzes[i].image}" />
                 <figcaption>${allGetQuizzes[i].title}</figcaption>
                 <div class="background"></div>
             </div>
@@ -168,10 +168,10 @@ function renderingUserQuizzes() {
                 let quizzez = response.data;
                 listUserQuizzes.innerHTML += 
                 `
-                <div class="box-quiz" onclick='goQuizPage(${quizzez.id})' >
-                    <img style="z-index: 1;" src='${quizzez.image}'/>
+                <div class="box-quiz">
+                    <img onclick="goQuizPage(${quizzez.id},'main-container','tela_2')" style="z-index: 1;" src='${quizzez.image}'/>
                     <div style="z-index:2;" class="optionsQuizzes">
-                        <ion-icon onclick="editQuizzes(this)" name="create-outline"></ion-icon>
+                        <ion-icon onclick="editQuizzes(this, ${quizzez.id})" name="create-outline"></ion-icon>
                         <ion-icon onclick="deletingQuizzes(this)" name="trash-outline"></ion-icon>
                     </div>
                     <figcaption>${quizzez.title}</figcaption>
@@ -231,33 +231,67 @@ function deletingQuizzes(id) {
 }
 
 let editId, editKey;
-function editQuizzes(id) {
+
+function abrirEdition(response){
+    console.log(response);
+}
+
+function erroEdition(response){
+    console.log("Deu errooooo")
+    console.log(response);
+}
+
+function editQuizzes(botao,id) {
     let KEY_QUIZZES = 'userQuizzes';
-    let userQuizzes = JSON.parse(localStorage.getItem(KEY_QUIZZES));
+    let userQuizzes = JSON.parse(localStorage.getItem("id"));
+    let editQuiz;
+    
+    console.log(botao);
+    console.log(userQuizzes);
+    console.log(allGetQuizzes);
+    
     let validId = false;
     let storageIndex = 0;
+
+    console.log(id);
+
+
     
-    for (let index = 0; index < userQuizzes; index++) {
-        let quizzesID = userQuizzes[index].id;
-        if (id === quizzesID) {
+    
+    for (let index = 0; index < allGetQuizzes.length; index++) {
+        if (allGetQuizzes[index].id === id) {
             validId = true;
-            storageIndex = index;
-            editId = id;
+            /*storageIndex = index;*/
+            editQuiz = allGetQuizzes[index];
+            console.log(editQuiz);
         }
     }
-    if (validId) {
-        let key = userQuizzes[storageIndex].secretKey;
+
+   if (validId) {
+
+        editQuiz.title = "Phineas e Ferb Lindos";
+        const novo = editQuiz.title;
+
+        console.log(novo);
+
+       // axios.put(`http://jsonplaceholder.typicode.com/posts/${id}`,{title})
+
+        const editarQuiz = axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {editQuiz});
+        /*let key = userQuizzes[storageIndex].secretKey;
         editKey = { headers: { 'Secret-Key': key } };
-        criarQuiz(id);
+        //criarQuiz(id);
+        editarQuiz.then(abrirEdition);
+        editarQuiz.catch(erroEdition);*/
 
     } else {
         alert('Quiz selecionado não existe registro!')
     }
 }
+
 function allYourQuizzes(title, imgUrl, idQuizzes) {
     return `
-    <div class="box-quiz" onclick="goQuizPage(${idQuizzes},'main-container','tela_2')" idQuizzes="${idQuizzes}">
-        <img imgUrl='${imgUrl}'/>
+    <div class="box-quiz" idQuizzes="${idQuizzes}">
+        <img onclick="goQuizPage(${idQuizzes},'main-container','tela_2')" imgUrl='${imgUrl}'/>
         <figcaption>${title}</figcaption>
         <div class="background"></div>
     </div>
