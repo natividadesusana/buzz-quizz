@@ -31,7 +31,7 @@ const urlAPI = 'https://mock-api.driven.com.br/api/v4/buzzquizz';
 let allGetQuizzes = [];
 
 // lista sorteada
-let userListId = [1 ,2 ,3];
+let userListId = [];
 
 let levels = [];
 let answers = 0;
@@ -43,8 +43,6 @@ let cont = 0;
 
 let objetoQuiz = [];
 let acertos = 0;
-
-
 
 // GET TODOS OS QUIZZES
 function getQuizzes() {
@@ -65,6 +63,7 @@ function errorGetQuizzes() {
 function renderingQuizzes(response) {
 
     allGetQuizzes = response.data;
+    console.log(response.data);
 
     const allQuizzes = document.querySelector('.all-quizzes .quizzes');
 
@@ -73,7 +72,7 @@ function renderingQuizzes(response) {
     for (let i = 0; i < allGetQuizzes.length; i++) {
 
         let templates = `
-            <div class="box-quiz" onclick="goQuizPage(${allGetQuizzes[i].id})">
+            <div class="box-quiz" onclick="goQuizPage(${allGetQuizzes[i].id},'main-container','tela_2')">
                 <img src="${allGetQuizzes[i].image}" />
                 <figcaption>${allGetQuizzes[i].title}</figcaption>
                 <div class="background"></div>
@@ -82,23 +81,42 @@ function renderingQuizzes(response) {
         allQuizzes.innerHTML = allQuizzes.innerHTML + templates;
 
     };
+
+    travaTela = false;
+
+    /*console.log("Quizzes do Usuario");
+    let userQuizzes = localStorage.getItem('id');
+
+    if (userQuizzes) {
+        let listId = JSON.parse(userQuizzes);
+        console.log(listId);
+        for (let id = 0; id < listId.length; id++) {
+            let quiz = listId[id];
+            userListId.push(quiz);
+        };
+    };
+    console.log(userListId);*/
 };
 
 
 // GET QUIZZES USUÁRIO
 // pega os quizzes do usuário
 function getUserQuizzes() {
-    let userQuizzes = localStorage.getItem('userQuizzes');
+    let userQuizzes = localStorage.getItem('id');
 
     if (userQuizzes) {
         let listId = JSON.parse(userQuizzes);
+        console.log(listId);
         for (let id = 0; id < listId.length; id++) {
             let quiz = listId[id];
             userListId.push(quiz);
         };
     };
+
+    console.log(userListId);
     // renderiza a lista de quizzes do usuário
     renderingUserQuizzes();
+
 };
 
 
@@ -131,6 +149,7 @@ function renderingUserQuizzes() {
             });
         };
     };
+
 };
 
 // allYourQuizzes(quizzez.id, quizzez.image, quizzez.title);
@@ -203,6 +222,15 @@ function editQuizzes(id) {
         alert('Quiz selecionado não existe registro!')
     }
 }
+function allYourQuizzes(title, imgUrl, idQuizzes) {
+    return `
+    <div class="box-quiz" onclick="goQuizPage(${idQuizzes},'main-container','tela_2')" idQuizzes="${idQuizzes}">
+        <img imgUrl='${imgUrl}'/>
+        <figcaption>${title}</figcaption>
+        <div class="background"></div>
+    </div>
+    `
+};
 
 
 // verifica se existe algum quizz do usuário, caso não html é mudado
@@ -271,6 +299,10 @@ function getNivel(acertos) {
     console.log(imgNivel);
     console.log(textoNivel);
 
+    travaTela = false;
+    cont = 0;
+
+
 }
 
 
@@ -281,6 +313,7 @@ function selecionaResposta(getEscolhida) {
     let aux = 0;
 
     cont++;
+    console.log(cont);
 
     if (travaTela === false) {
         answersChoose = getEscolhida;
@@ -333,6 +366,7 @@ function selecionaResposta(getEscolhida) {
         }, 2000);
     } else {
 
+        console.log("Buscando o nível")
         setTimeout(() => {
             getNivel(acertos);
             const local = document.querySelector(".exibe-nivel");
@@ -406,9 +440,10 @@ function getPerguntas(objetoQuiz) {
 
 // VAI P/ TELA 2 DE PÁGINA DE QUIZZES
 
-function goQuizPage(quizEscolhido) { // Ao clicar sobre o quizz, esta tela deve sumir e dar lugar à Tela 2: Página de um quizz.
+function goQuizPage(quizEscolhido, local, local2) { // Ao clicar sobre o quizz, esta tela deve sumir e dar lugar à Tela 2: Página de um quizz.
 
-    mudaPagina("main-container", "tela_2");
+    /*mudaPagina("main-container", "tela_2");*/
+    mudaPagina(local,local2);
 
     console.log(quizEscolhido);
     console.log(allGetQuizzes);
@@ -526,6 +561,8 @@ function mudaPagina(local, local2) {
 
     tela1.classList.add("escondido");
     tela2.classList.remove("escondido");
+
+    
 }
 
 function verificaInfoBasicaQuiz() {
@@ -1045,8 +1082,10 @@ function criarQuiz() {
         alert('deu ruim');
     }
 
+    
+
     function armazenarLocal() {
-        objetoSerializado = JSON.stringify(objetoCriado.data.id);
+        let objetoSerializado = JSON.stringify(userListId);
         console.log(objetoSerializado);
         localStorage.setItem("id", objetoSerializado);
     }
@@ -1055,6 +1094,8 @@ function criarQuiz() {
         alteraDivQuizzCriado();
         objetoCriado = resposta;
         console.log(objetoCriado);
+        userListId.push(objetoCriado.data.id)
+        console.log(userListId);
         armazenarLocal();
     }
 
@@ -1088,7 +1129,15 @@ function goNewQuizPage() {
 }
 
 function voltarHome() {
-    mudaPagina("tela_3_4", "main-container");
+
+    const tela3 = document.querySelectorAll("input");
+    for(let i = 0; i< tela3.length; i++){
+        tela3[i].value = "";
+    }
+    const listaPerguntas = document.querySelector(".criar-perguntas");
+    listaPerguntas.innerHTML = "";
+
+    mudaPagina("tela_3_4","main-container");
 }
 
 // CÓDIGO TAIS ABAIXO --------------------------------------
@@ -1114,6 +1163,21 @@ function restartQuizz() {
 }
 
 function comeBackHome() {
+
+    armazenaCorretas = [];
+    acertos = 0;
+    cont = 0;
+    travaTela = false;
+    
+    const getHtmlPerguntas = document.querySelector(".exibe-perguntas");
+    console.log(getHtmlPerguntas);
+    getHtmlPerguntas.innerHTML = "";
+
+    const getHtmlNivel = document.querySelector(".tela_2");
+    console.log(getHtmlNivel.lastChild);
+    
+    getHtmlNivel.removeChild(getHtmlNivel.lastChild);
+
     mudaPagina("tela_2", "main-container");
 }
 
@@ -1142,10 +1206,17 @@ function quizzesCreatedSuccess(response) {
 };
 
 
+function acessarQuiz(){
+
+    getQuizzes();
+    renderingUserQuizzes();
+    setTimeout (() => { travaTela = false;
+        goQuizPage(userListId.at(-1),"tela_3_4","tela_2")}, 1500);
+}
 
 /*linha pra teste*/
 
+getUserQuizzes();
 getQuizzes();
 renderingQuizzes();
-getUserQuizzes();
 renderingUserQuizzes();
