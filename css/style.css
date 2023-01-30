@@ -365,10 +365,10 @@ header p {
 
 .exibe-resposta img {
 
-  width: 340px;
+  width: 300px;
   height: 180px;
 
-  margin-bottom: 7px;
+  /*margin-bottom: 7px;*/
 
 }
 
@@ -385,7 +385,7 @@ header p {
 .paragrafo-resposta,
 .paragrafo-nivel {
 
-  width: 340px;
+  width: 300px;
   flex-wrap: wrap;
   word-wrap: break-word;
 }
@@ -406,6 +406,7 @@ header p {
 .organiza-resposta {
   display: flex;
   flex-wrap: wrap;
+  margin: 0 auto;
 
 
   /*padding: 40px;*/
