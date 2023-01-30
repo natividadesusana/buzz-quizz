@@ -44,6 +44,10 @@ let cont = 0;
 let objetoQuiz = [];
 let acertos = 0;
 
+const loadingQuizzes = document.querySelector(".load-user-quiz");
+const loadingUserQuizzes = document.querySelector(".load-quiz");
+const loadingQuizPage = document.querySelector(".load-quiz-page");
+
 
 
 // GET TODOS OS QUIZZES
@@ -82,6 +86,7 @@ function renderingQuizzes(response) {
         allQuizzes.innerHTML = allQuizzes.innerHTML + templates;
 
     };
+    loadingQuizzes.classList.add("escondido");
 };
 
 
@@ -121,6 +126,7 @@ function renderingUserQuizzes() {
             });
         };
     };
+    loadingUserQuizzes.classList.add("escondido");
 };
 
 
@@ -358,7 +364,6 @@ function getPerguntas(objetoQuiz) {
     }
 
     local.innerHTML = html;
-
 }
 
 // VAI P/ TELA 2 DE PÁGINA DE QUIZZES
@@ -384,6 +389,7 @@ function goQuizPage(quizEscolhido) { // Ao clicar sobre o quizz, esta tela deve 
     imgQuiz.src = objetoQuiz.image;
     tituloObjeto.innerHTML = objetoQuiz.title;
 
+    loadingQuizPage.classList.add("escondido");
     getPerguntas(objetoQuiz);
 }
 
