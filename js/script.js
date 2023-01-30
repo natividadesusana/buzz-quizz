@@ -31,7 +31,7 @@ const urlAPI = 'https://mock-api.driven.com.br/api/v4/buzzquizz';
 let allGetQuizzes = [];
 
 // lista sorteada
-let userListId = [0,1,2,3,4];
+let userListId = [0, 1, 2, 3, 4];
 
 let levels = [];
 let answers = 0;
@@ -145,18 +145,18 @@ function deletingQuizzes(id) {
     let validId = false;
     let storageIndex = 0;
 
-    for(let index= 0; index < userQuizzes; index++) {
+    for (let index = 0; index < userQuizzes; index++) {
         let quizzesID = userQuizzes[index].id;
-        if(id === quizzesID) {
+        if (id === quizzesID) {
             validId = true;
             storageIndex = index;
         }
     }
-    if(validId) {
+    if (validId) {
         let key = userQuizzes[storageIndex].secretKey;
-        let header = { headers: {'Secret-Key': key}};
-        if(confirm('Deletar esse Quiz?')) {
-            let promise =  axios.delete(`${urlAPI}/quizzes/${id}`, header);
+        let header = { headers: { 'Secret-Key': key } };
+        if (confirm('Deletar esse Quiz?')) {
+            let promise = axios.delete(`${urlAPI}/quizzes/${id}`, header);
             userQuizzes.splice(storageIndex, 1);
             localStorage.setItem(KEY_QUIZZES, JSON.stringify(userQuizzes));
             promise.then(alert('Quiz deletado!'));
@@ -165,31 +165,31 @@ function deletingQuizzes(id) {
             alert('Quiz selecionado não existe registro!')
         }
     }
+}
 
-    function editQuizzes(id) {
-        let KEY_QUIZZES = 'userQuizzes';
-        let userQuizzes = JSON.parse(localStorage.getItem(KEY_QUIZZES));
-        let validId = false;
-        let storageIndex = 0;
-        let editKey;
-        let editId;
+function editQuizzes(id) {
+    let KEY_QUIZZES = 'userQuizzes';
+    let userQuizzes = JSON.parse(localStorage.getItem(KEY_QUIZZES));
+    let validId = false;
+    let storageIndex = 0;
+    let editKey;
+    let editId;
 
-        for(let index= 0; index < userQuizzes; index++) {
-            let quizzesID = userQuizzes[index].id;
-            if(id === quizzesID) {
-                validId = true;
-                storageIndex = index;
-                editId = id;
-            }
+    for (let index = 0; index < userQuizzes; index++) {
+        let quizzesID = userQuizzes[index].id;
+        if (id === quizzesID) {
+            validId = true;
+            storageIndex = index;
+            editId = id;
         }
-        if(validId) {
-            let key = userQuizzes[storageIndex].secretKey;
-            editKey = { headers: {'Secret-Key': key}};
-            criarQuiz(id);
+    }
+    if (validId) {
+        let key = userQuizzes[storageIndex].secretKey;
+        editKey = { headers: { 'Secret-Key': key } };
+        criarQuiz(id);
 
-        } else {
-            alert('Quiz selecionado não existe registro!')
-        }
+    } else {
+        alert('Quiz selecionado não existe registro!')
     }
 }
 
