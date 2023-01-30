@@ -31,7 +31,7 @@ const urlAPI = 'https://mock-api.driven.com.br/api/v4/buzzquizz';
 let allGetQuizzes = [];
 
 // lista sorteada
-let userListId = [0, 1, 2, 3, 4];
+let userListId = [1 ,2 ,3];
 
 let levels = [];
 let answers = 0;
@@ -116,28 +116,40 @@ function renderingUserQuizzes() {
             const promisseGET = axios.get(`${urlAPI}/quizzes/${idQuizzes}`);
             promisseGET.then((response) => {
                 let quizzez = response.data;
-                listUserQuizzes.innerHTML += allYourQuizzes(quizzez.id, quizzez.image, quizzez.title);
+                listUserQuizzes.innerHTML += 
+                `
+                <div class="box-quiz" onclick='goQuizPage(${quizzez.id})' >
+                    <img style="z-index: 1;" src='${quizzez.image}'/>
+                    <div style="z-index:2;" class="optionsQuizzes">
+                        <ion-icon onclick="editQuizzes(this)" name="create-outline"></ion-icon>
+                        <ion-icon onclick="deletingQuizzes(this)" name="trash-outline"></ion-icon>
+                    </div>
+                    <figcaption>${quizzez.title}</figcaption>
+                    <div class="background"></div>
+                </div>
+                `
             });
         };
     };
 };
 
+// allYourQuizzes(quizzez.id, quizzez.image, quizzez.title);
 
 // retorna todos os seus quizzes 
-function allYourQuizzes(idQuizzes, imgUrl, title) {
-    let htmlQuizzez = `
-    <div class="box-quiz" onclick="goQuizPage()" idQuizzes="${idQuizzes}">
-        <img style="z-index: 1;" imgUrl='${imgUrl}'/>
-        <div style="z-index:2;" class="optionsQuizzes">
-            <ion-icon onclick="editQuizzes(this)" name="create-outline"></ion-icon>
-            <ion-icon onclick="deletingQuizzes(this)" name="trash-outline"></ion-icon>
-        </div>
-        <figcaption>${title}</figcaption>
-        <div class="background"></div>
-    </div>
-    `
-    return htmlQuizzez;
-};
+// function allYourQuizzes(idQuizzes, imgUrl, title) {
+//     let htmlQuizzez = `
+//     <div class="box-quiz" onclick="goQuizPage()" idQuizzes="${idQuizzes}">
+//         <img style="z-index: 1;" imgUrl='${imgUrl}'/>
+//         <div style="z-index:2;" class="optionsQuizzes">
+//             <ion-icon onclick="editQuizzes(this)" name="create-outline"></ion-icon>
+//             <ion-icon onclick="deletingQuizzes(this)" name="trash-outline"></ion-icon>
+//         </div>
+//         <figcaption>title=${title}</figcaption>
+//         <div class="background"></div>
+//     </div>
+//     `
+//     return htmlQuizzez;
+// };
 
 function deletingQuizzes(id) {
     let KEY_QUIZZES = 'userQuizzes';
