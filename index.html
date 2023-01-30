@@ -105,13 +105,13 @@
 
         <div class="info-basica-quiz">
             <input class="titulo-quiz" type="text" placeholder="Título do seu quizz">
-            <p class="escondido"> Preencha os dados corretamente </p>
+            <p class="escondido"> Deve ter no mínimo 20 e no máximo 65 caracteres </p>
             <input class="imagem-quiz" type="text" placeholder="URL da imagem do seu quizz">
-            <p class="escondido"> Preencha os dados corretamente </p>
+            <p class="escondido"> O valor informado não é uma URL válida </p>
             <input type="text" placeholder="Quantidade de perguntas do quizz">
-            <p class="escondido"> Preencha os dados corretamente </p>
+            <p class="escondido"> O quizz deve ter no mínimo 3 perguntas </p>
             <input type="text" placeholder="Quantidade de níveis do quizz">
-            <p class="escondido"> Preencha os dados corretamente </p>
+            <p class="escondido"> O quizz deve ter no mínimo 2 níveis </p>
         </div>
 
         <button onclick="verificaInfoBasicaQuiz()"> Prosseguir pra criar perguntas </button>
@@ -142,7 +142,7 @@
 
         </div>
 
-        <button> Acessar Quizz </button>
+        <button onclick="goNewQuizPage()"> Acessar Quizz </button>
         <span onclick="voltarHome()"> Voltar pra home </span>
     </aside>
 

@@ -724,6 +724,7 @@ header p {
   font-weight: 400;
   font-size: 21px;
   color: #FFF5F4;
+  cursor: pointer;
 }
 
 .tela_3_4 span {

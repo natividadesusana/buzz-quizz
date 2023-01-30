@@ -685,13 +685,13 @@ function niveisQuiz() {
 
                     <div class="barra-animada escondido">
                         <input class="nivel-titulo" type="text" placeholder="Título do nível">
-                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <p class="escondido"> Deve ter no mínimo 10 caracteres </p>
                         <input class="nivel-acerto" type="text" placeholder="% de acerto mínima">
-                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <p class="escondido"> Número entre 0 e 100 (pelo menos um deve ser 0) </p>
                         <input class="nivel-url" type="text" placeholder="URL da imagem do nível">
-                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <p class="escondido"> Deve ter formato de URL </p>
                         <textarea class="nivel-descricao" placeholder="Descrição do nível"></textarea>
-                        <p class="escondido"> Preencha os dados corretamente </p>
+                        <p class="escondido"> Deve ter um mínimo de 30 caracteres </p>
                     </div>
         </div>`
     }
@@ -724,35 +724,35 @@ function renderizarPerguntas() {
         <div class="pergunta-editando escondido">
             <div class="input-duplo">
                 <input class="titulo-pergunta" placeholder="Texto da pergunta" />
-                <p class="escondido"> Preencha os dados corretamente </p>
-                <input class="cor-de-fundo" placeholder="Cor de fundo da pergunta em hexadecimal (#??????)" />
-                <p class="escondido"> Preencha os dados corretamente </p>
+                <p class="escondido"> Deve ter no mínimo 20 caracteres </p>
+                <input class="cor-de-fundo" placeholder="Cor de fundo da pergunta" />
+                <p class="escondido"> Deve ser uma cor em hexadecimal (#??????) </p>
             </div>
             <h1> Resposta Correta </h1>
             <div class="input-duplo">
                 <input class="resposta-correta" placeholder="Resposta correta" />
-                <p class="escondido"> Preencha os dados corretamente </p>
+                <p class="escondido"> Não pode estar vazio </p>
                 <input class="url-correta" placeholder="URL da Imagem" />
-                <p class="escondido"> Preencha os dados corretamente </p>
+                <p class="escondido"> Deve ter formato de URL </p>
             </div>
             <h1> Respostas Incorretas </h1>
             <div class="input-duplo incorreta-um">
                 <input class="resposta-incorreta-um" placeholder="Resposta incorreta 1" />
-                <p class="escondido"> Preencha os dados corretamente </p>
+                <p class="escondido"> Não pode estar vazio </p>
                 <input class="url-incorreta-um" placeholder="URL da imagem 1" />
-                <p class="escondido"> Preencha os dados corretamente </p>
+                <p class="escondido"> Deve ter formato de URL </p>
             </div>
             <div class="input-duplo incorreta-dois">
                 <input class="resposta-incorreta-dois" placeholder="Resposta incorreta 2" />
-                <p class="escondido"> Preencha os dados corretamente </p>
+                <p class="escondido"> Não pode estar vazio </p>
                 <input class="url-incorreta-dois" placeholder="URL da imagem 2" />
-                <p class="escondido"> Preencha os dados corretamente </p>
+                <p class="escondido"> Deve ter formato de URL </p>
             </div>
             <div class="input-duplo incorreta-tres">
                 <input class="resposta-incorreta-tres" placeholder="Resposta incorreta 3" />
-                <p class="escondido"> Preencha os dados corretamente </p>
+                <p class="escondido"> Não pode estar vazio </p>
                 <input class="url-incorreta-tres" placeholder="URL da imagem 3" />
-                <p class="escondido"> Preencha os dados corretamente </p>
+                <p class="escondido"> Deve ter formato de URL </p>
             </div>
         </div>
     </li>`;
@@ -991,6 +991,9 @@ function criaObjetoQuiz() {
     return objeto;
 }
 
+let objetoSerializado = "";
+let objetoCriado;
+
 function criarQuiz() {
 
     let request = axios.post('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes', criaObjetoQuiz());
@@ -999,13 +1002,10 @@ function criarQuiz() {
         alert('deu ruim');
     }
 
-    let objetoCriado;
-
     function armazenarLocal() {
-        let objetoSerializado = JSON.stringify(objetoCriado.data.id);
+        objetoSerializado = JSON.stringify(objetoCriado.data.id);
         console.log(objetoSerializado);
         localStorage.setItem("id", objetoSerializado);
-
     }
 
     function processarResposta(resposta) {
@@ -1031,8 +1031,21 @@ function alteraDivQuizzCriado() {
     div.innerHTML = template;
 }
 
+function goNewQuizPage() {
+
+    mudaPagina("tela_3_4", "tela_2");
+
+    const imgQuiz = document.querySelector(".banner");
+    const tituloObjeto = document.querySelector(".texto-banner");
+
+    imgQuiz.src = objetoCriado.data.image;
+    tituloObjeto.innerHTML = objetoCriado.data.title;
+
+    getPerguntas(objetoCriado.data);
+}
+
 function voltarHome() {
-    mudaPagina("tela_3_4","main-container");
+    mudaPagina("tela_3_4", "main-container");
 }
 
 // CÓDIGO TAIS ABAIXO --------------------------------------
