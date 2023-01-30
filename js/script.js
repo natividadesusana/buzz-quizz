@@ -1265,7 +1265,7 @@ function acessarQuiz(){
     getQuizzes();
     renderingUserQuizzes();
     setTimeout (() => { travaTela = false;
-        goQuizPage(userListId.at(-1),"tela_3_4","tela_2")}, 1500);
+        goQuizPage(userListId.at(-1),"tela_3_4","tela_2")}, 3500);
 }
 
 /*linha pra teste*/
