@@ -129,8 +129,8 @@ function allYourQuizzes(idQuizzes, imgUrl, title) {
     <div class="box-quiz" onclick="goQuizPage()" idQuizzes="${idQuizzes}">
         <img style="z-index: 1;" imgUrl='${imgUrl}'/>
         <div style="z-index:2;" class="optionsQuizzes">
-            <ion-icon onclick="editQuizzes(${quizzez.id})" name="create-outline"></ion-icon>
-            <ion-icon onclick="deletingQuizzes(${quizzez.id})" name="trash-outline"></ion-icon>
+            <ion-icon onclick="editQuizzes(this)" name="create-outline"></ion-icon>
+            <ion-icon onclick="deletingQuizzes(this)" name="trash-outline"></ion-icon>
         </div>
         <figcaption>${title}</figcaption>
         <div class="background"></div>
