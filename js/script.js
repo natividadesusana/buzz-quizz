@@ -84,17 +84,18 @@ function renderingQuizzes(response) {
     allQuizzes.innerHTML = '';
 
     for (let i = 0; i < allGetQuizzes.length; i++) {
-       
+        if(!userListId.includes(allGetQuizzes[i].id)){
 
-        let templates = `
-            <div class="box-quiz">
-                <img onclick="goQuizPage(${allGetQuizzes[i].id},'main-container','tela_2')" src="${allGetQuizzes[i].image}" />
-                <figcaption>${allGetQuizzes[i].title}</figcaption>
-                <div class="background"></div>
-            </div>
-        `
-        allQuizzes.innerHTML = allQuizzes.innerHTML + templates;
+            let templates = `
+                <div class="box-quiz">
+                    <img onclick="goQuizPage(${allGetQuizzes[i].id},'main-container','tela_2')" src="${allGetQuizzes[i].image}" />
+                    <figcaption>${allGetQuizzes[i].title}</figcaption>
+                    <div class="background"></div>
+                </div>
+            `
+            allQuizzes.innerHTML = allQuizzes.innerHTML + templates;
 
+        }
     };
 
     travaTela = false;
@@ -1186,7 +1187,11 @@ function voltarHome() {
     const listaPerguntas = document.querySelector(".criar-perguntas");
     listaPerguntas.innerHTML = "";
 
+    
+    location.reload();
+
     mudaPagina("tela_3_4","main-container");
+    
 }
 
 // CÓDIGO TAIS ABAIXO --------------------------------------
