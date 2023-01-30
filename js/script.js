@@ -68,14 +68,23 @@ function errorGetQuizzes() {
 // renderizando todos os quizzes
 function renderingQuizzes(response) {
 
+    if(userListId === localStorage) {
+        allGetQuizzes.remove(userListId)
+    }
+
     allGetQuizzes = response.data;
     console.log(response.data);
+
+    // allGetQuizzes.filter(userListId => (
+    //     allGetQuizzes.indexOf(userListId.id) 
+    // ))
 
     const allQuizzes = document.querySelector('.all-quizzes .quizzes');
 
     allQuizzes.innerHTML = '';
 
     for (let i = 0; i < allGetQuizzes.length; i++) {
+       
 
         let templates = `
             <div class="box-quiz" onclick="goQuizPage(${allGetQuizzes[i].id},'main-container','tela_2')">
@@ -105,6 +114,22 @@ function renderingQuizzes(response) {
     loadingQuizzes.classList.add("escondido");
 };
 
+// verifica se existe algum quizz do usuário, caso não html é mudado
+function checkExistsUserQuiz() {
+    const noneQuizzesCreated = document.querySelector('.quiz-not-created');
+    const quizzesCreated = document.querySelector('.your-quizzes');
+
+    if (localStorage.length === 0) {
+        noneQuizzesCreated.classList.remove('hidden');
+        quizzesCreated.classList.add('hidden');
+    };
+    if (localStorage.length !== 0) {
+        renderingUserQuizzes()
+        noneQuizzesCreated.classList.add('hidden');
+        quizzesCreated.classList.remove('hidden');
+    };
+};
+checkExistsUserQuiz();
 
 // GET QUIZZES USUÁRIO
 // pega os quizzes do usuário
@@ -239,23 +264,6 @@ function allYourQuizzes(title, imgUrl, idQuizzes) {
     `
 };
 
-
-// verifica se existe algum quizz do usuário, caso não html é mudado
-function checkExistsUserQuiz() {
-    const noneQuizzesCreated = document.querySelector('.quiz-not-created');
-    const quizzesCreated = document.querySelector('.your-quizzes');
-
-    if (localStorage.length === 0) {
-        noneQuizzesCreated.classList.remove('hidden');
-        quizzesCreated.classList.add('hidden');
-    };
-    if (localStorage.length != 0) {
-        renderingUserQuizzes()
-        noneQuizzesCreated.classList.add('hidden');
-        quizzesCreated.classList.remove('hidden');
-    };
-};
-checkExistsUserQuiz();
 
 
 function getNivel(acertos) {
