@@ -139,24 +139,58 @@ function allYourQuizzes(idQuizzes, imgUrl, title) {
     return htmlQuizzez;
 };
 
-function deletingQuizzes(quizzez) {
-    let userQuizzes = JSON.parse(localStorage.getItem('userQuizzes'));
-    let divParent = quizzez.parentNode.parentNode;
-    let idDivParent = divParent.id;
+function deletingQuizzes(id) {
+    let KEY_QUIZZES = 'userQuizzes';
+    let userQuizzes = JSON.parse(localStorage.getItem(KEY_QUIZZES));
+    let validId = false;
+    let storageIndex = 0;
 
-    for(element in userQuizzes) {
-        if(userQuizzes[element].id == idDivParent) {
-            delete userQuizzes[element]
-            userQuizzes.shift();
+    for(let index= 0; index < userQuizzes; index++) {
+        let quizzesID = userQuizzes[index].id;
+        if(id === quizzesID) {
+            validId = true;
+            storageIndex = index;
+        }
+    }
+    if(validId) {
+        let key = userQuizzes[storageIndex].secretKey;
+        let header = { headers: {'Secret-Key': key}};
+        if(confirm('Deletar esse Quiz?')) {
+            let promise =  axios.delete(`${urlAPI}/quizzes/${id}`, header);
+            userQuizzes.splice(storageIndex, 1);
+            localStorage.setItem(KEY_QUIZZES, JSON.stringify(userQuizzes));
+            promise.then(alert('Quiz deletado!'));
+            window.location.reload();
+        } else {
+            alert('Quiz selecionado não existe registro!')
         }
     }
 
-    userQuizzes = JSON.stringify(userQuizzes);
-    localStorage.setItem('userQuizzes', userQuizzes);
-}
+    function editQuizzes(id) {
+        let KEY_QUIZZES = 'userQuizzes';
+        let userQuizzes = JSON.parse(localStorage.getItem(KEY_QUIZZES));
+        let validId = false;
+        let storageIndex = 0;
+        let editKey;
+        let editId;
 
-function editQuizzes() {
-    alert('teste')
+        for(let index= 0; index < userQuizzes; index++) {
+            let quizzesID = userQuizzes[index].id;
+            if(id === quizzesID) {
+                validId = true;
+                storageIndex = index;
+                editId = id;
+            }
+        }
+        if(validId) {
+            let key = userQuizzes[storageIndex].secretKey;
+            editKey = { headers: {'Secret-Key': key}};
+            criarQuiz(id);
+
+        } else {
+            alert('Quiz selecionado não existe registro!')
+        }
+    }
 }
 
 
