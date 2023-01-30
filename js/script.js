@@ -167,14 +167,13 @@ function deletingQuizzes(id) {
     }
 }
 
+let editId, editKey;
 function editQuizzes(id) {
     let KEY_QUIZZES = 'userQuizzes';
     let userQuizzes = JSON.parse(localStorage.getItem(KEY_QUIZZES));
     let validId = false;
     let storageIndex = 0;
-    let editKey;
-    let editId;
-
+    
     for (let index = 0; index < userQuizzes; index++) {
         let quizzesID = userQuizzes[index].id;
         if (id === quizzesID) {
