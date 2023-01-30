@@ -31,7 +31,7 @@ const urlAPI = 'https://mock-api.driven.com.br/api/v4/buzzquizz';
 let allGetQuizzes = [];
 
 // lista sorteada
-let userListId = [0, 1, 2, 3];
+let userListId = [0,1,2,3,4];
 
 let levels = [];
 let answers = 0;
@@ -106,7 +106,7 @@ function getUserQuizzes() {
 function renderingUserQuizzes() {
 
     if (userListId.length > 0) {
-        const listUserQuizzes = document.querySelector('.quizzes');
+        const listUserQuizzes = document.querySelector('.your-quizzes .quizzes');
 
         listUserQuizzes.innerHTML = '';
 
@@ -116,8 +116,7 @@ function renderingUserQuizzes() {
             const promisseGET = axios.get(`${urlAPI}/quizzes/${idQuizzes}`);
             promisseGET.then((response) => {
                 let quizzez = response.data;
-                listUserQuizzes.innerHTML +=
-                    allYourQuizzes(quizzez.title, quizzez.image, quizzez.id);
+                listUserQuizzes.innerHTML += allYourQuizzes(quizzez.id, quizzez.image, quizzez.title);
             });
         };
     };
@@ -126,14 +125,39 @@ function renderingUserQuizzes() {
 
 // retorna todos os seus quizzes 
 function allYourQuizzes(idQuizzes, imgUrl, title) {
-    return `
+    let htmlQuizzez = `
     <div class="box-quiz" onclick="goQuizPage()" idQuizzes="${idQuizzes}">
-        <img imgUrl='${imgUrl}'/>
+        <img style="z-index: 1;" imgUrl='${imgUrl}'/>
+        <div style="z-index:2;" class="optionsQuizzes">
+            <ion-icon onclick="editQuizzes(${quizzez.id})" name="create-outline"></ion-icon>
+            <ion-icon onclick="deletingQuizzes(${quizzez.id})" name="trash-outline"></ion-icon>
+        </div>
         <figcaption>${title}</figcaption>
         <div class="background"></div>
     </div>
     `
+    return htmlQuizzez;
 };
+
+function deletingQuizzes(quizzez) {
+    let userQuizzes = JSON.parse(localStorage.getItem('userQuizzes'));
+    let divParent = quizzez.parentNode.parentNode;
+    let idDivParent = divParent.id;
+
+    for(element in userQuizzes) {
+        if(userQuizzes[element].id == idDivParent) {
+            delete userQuizzes[element]
+            userQuizzes.shift();
+        }
+    }
+
+    userQuizzes = JSON.stringify(userQuizzes);
+    localStorage.setItem('userQuizzes', userQuizzes);
+}
+
+function editQuizzes() {
+    alert('teste')
+}
 
 
 // verifica se existe algum quizz do usuário, caso não html é mudado
@@ -152,32 +176,6 @@ function checkExistsUserQuiz() {
     };
 };
 checkExistsUserQuiz();
-
-
-// BUSCANDO QUIZZES CRIADO PELO USER, SE NÃO HOUVER CRIA UM ARRAY VAZIO, SE HOUVER TRANSFORMA STRING EM ARRAY E ADD NO LOCAL STORAGE
-function saveLocalStorage(createdId) {
-    let userQuizzes;
-
-    if (!localStorage.getItem('userQuizzes')) {
-        userQuizzes = [];
-    } else {
-        userQuizzes = JSON.parse(localStorage.getItem('userQuizzes'));
-    };
-
-    userQuizzes.push(createdId);
-    localStorage.setItem('userQuizzes', JSON.stringify(userQuizzes));
-};
-
-
-// FUNÇÃO PARA A PROMISE.THEN DO QUIZZES CRIADO
-
-
-
-function quizzesCreatedSuccess(response) {
-    saveLocalStorage(response.data.id);
-    renderSuccessQuizzes(response.data);
-};
-
 
 
 function getNivel(acertos) {
@@ -1024,7 +1022,7 @@ function alteraDivQuizzCriado() {
     const urlImagem = document.querySelector(".imagem-quiz");
     const tituloQuiz = document.querySelector(".titulo-quiz");
 
-    let template = `<img class="imagem-quiz-criado" src="${urlImagem.value}" />
+    let template = `<img onclick="entrarQuiz(this)" class="imagem-quiz-criado" src="${urlImagem.value}" />
     <figcaption>${tituloQuiz.value}</figcaption>
     <div class="background"></div>`
 
@@ -1073,6 +1071,32 @@ function restartQuizz() {
 function comeBackHome() {
     mudaPagina("tela_2", "main-container");
 }
+
+
+
+// BUSCANDO QUIZZES CRIADO PELO USER, SE NÃO HOUVER CRIA UM ARRAY VAZIO, SE HOUVER TRANSFORMA STRING EM ARRAY E ADD NO LOCAL STORAGE
+function saveLocalStorage(createdId) {
+    let userQuizzes;
+
+    if (!localStorage.getItem('userQuizzes')) {
+        userQuizzes = [];
+    } else {
+        userQuizzes = JSON.parse(localStorage.getItem('userQuizzes'));
+    };
+
+    userQuizzes.push(createdId);
+    localStorage.setItem('userQuizzes', JSON.stringify(userQuizzes));
+};
+
+
+// FUNÇÃO PARA A PROMISE.THEN DO QUIZZES CRIADO
+
+function quizzesCreatedSuccess(response) {
+    saveLocalStorage(response.data.id);
+    renderSuccessQuizzes(response.data);
+};
+
+
 
 /*linha pra teste*/
 
