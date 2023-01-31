@@ -1,10 +1,16 @@
 # Project #06 - Project: BuzzQuizz
 
+## Project developed for Bootcamp Driven Education
+
+_____
+
 <img width="782" alt="Captura de Tela 2023-01-30 às 21 22 50" src="https://user-images.githubusercontent.com/95102911/215626947-7353ae54-a251-4bd4-90c5-d036f67bc56a.png">
+
+_____
 
 <img width="895" alt="Captura de Tela 2023-01-30 às 21 23 29" src="https://user-images.githubusercontent.com/95102911/215626958-4aee343c-6e07-4f1e-a857-2e9c909ae649.png">
 
-
+_____
 
 ## ✅ Requirements
 
